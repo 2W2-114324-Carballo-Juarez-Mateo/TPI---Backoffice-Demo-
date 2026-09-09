@@ -1,0 +1,13 @@
+# Perfil para correr dentro de la red de Docker Compose
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres-admin:5432/administration_db
+    username: backoffice
+    password: ${ADMIN_DB_PASSWORD:backoffice123}
+  kafka:
+    bootstrap-servers: kafka:9092
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/

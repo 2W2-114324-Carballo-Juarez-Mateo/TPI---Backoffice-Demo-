@@ -1,0 +1,40 @@
+# Java / Maven
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+*.code-workspace
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# Env / secretos
+.env
+*.local
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Docs generadas
+docs/java_doc/*
+docs/api_doc/*
+docs/app_doc/*
+!docs/java_doc/.gitkeep
+!docs/api_doc/README.md
+!docs/app_doc/README.md
