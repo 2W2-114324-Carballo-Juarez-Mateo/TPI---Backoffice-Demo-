@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <title>UTN FRC — Backoffice Institucional (Tema 12)</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="logo-utn-frc.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Fonts: Inter & JetBrains Mono + Material Symbols Outlined -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN with Material 3 Theme Tokens from DESIGN.md -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#f7f9ff",
+            "surface-dim": "#d7dae0",
+            "surface-bright": "#f7f9ff",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f1f4fa",
+            "surface-container": "#ebeef4",
+            "surface-container-high": "#e5e8ee",
+            "surface-container-highest": "#dfe3e8",
+            "on-surface": "#181c20",
+            "on-surface-variant": "#3f4850",
+            "outline": "#707881",
+            "outline-variant": "#bfc7d2",
+            "primary": "#006194",
+            "primary-container": "#007bb9",
+            "on-primary": "#ffffff",
+            "secondary": "#4059aa",
+            "secondary-container": "#8fa7fe",
+            "tertiary": "#006195",
+            "error": "#ba1a1a",
+            "primary-fixed": "#cce5ff",
+            "on-primary-fixed": "#001d31",
+            "primary-fixed-dim": "#93ccff"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-sans text-on-surface h-full m-0 p-0 overflow-hidden antialiased">
+  <app-root class="h-full flex flex-col"></app-root>
+</body>
+</html>

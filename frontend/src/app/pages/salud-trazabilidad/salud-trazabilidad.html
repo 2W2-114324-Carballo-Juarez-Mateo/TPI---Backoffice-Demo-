@@ -1,0 +1,215 @@
+<div class="p-8 space-y-8 max-w-7xl mx-auto">
+  <!-- Cabecera -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div>
+      <div class="flex items-center gap-2 mb-1">
+        <span class="text-xs font-mono px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">MOD-09</span>
+        <span class="text-xs text-outline">•</span>
+        <span class="text-xs text-outline font-semibold text-primary">Tema 12 • FRC Core</span>
+      </div>
+      <h1 class="text-2xl font-bold text-on-surface tracking-tight">Salud y Trazabilidad Distribuida</h1>
+      <p class="text-sm text-on-surface-variant mt-0.5">Topología de microservicios, latencia p99 y trazas de transacciones cross-service.</p>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button
+        (click)="syncCaches()"
+        [disabled]="isSyncing()"
+        class="bg-primary hover:bg-primary-container text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm disabled:opacity-50"
+      >
+        <span class="material-symbols-outlined text-[16px]" [class.animate-spin]="isSyncing()">sync</span>
+        <span>Sincronizar Cachés</span>
+      </button>
+    </div>
+  </div>
+
+  @if (feedback()) {
+    <div class="bg-primary-fixed/30 border border-primary/20 text-on-primary-fixed px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
+      <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+      <span>{{ feedback() }}</span>
+    </div>
+  }
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    @for (s of stats(); track s.title) {
+      <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between hover:border-primary/40 transition-all">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs uppercase font-semibold text-outline tracking-wider">{{ s.title }}</span>
+          <span class="p-2 rounded-xl bg-surface-container-high text-primary material-symbols-outlined text-[20px]">{{ s.icon }}</span>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-on-surface font-mono">{{ s.value }}</div>
+          <p class="text-xs text-outline mt-1 font-medium">{{ s.sub }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Topología de los 6 Microservicios (Bento Cards con CPU en Tiempo Real) -->
+  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm p-6 space-y-4">
+    <div class="flex justify-between items-center pb-3 border-b border-surface-container-highest">
+      <div>
+        <h2 class="text-base font-bold text-on-surface">Topología de Microservicios Conectados</h2>
+        <p class="text-xs text-on-surface-variant">Estado de nodos, puertos y utilización de CPU reportados por Spring Boot Actuator</p>
+      </div>
+      <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+        Auto-refresh activo (5s)
+      </span>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      @for (ms of microservices(); track ms.id) {
+        <div
+          class="p-4 rounded-xl border transition-all space-y-3"
+          [class.bg-surface-container-low]="!ms.isDegraded"
+          [class.border-outline-variant/30]="!ms.isDegraded"
+          [class.bg-rose-50/40]="ms.isDegraded"
+          [class.border-rose-300]="ms.isDegraded"
+        >
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="text-xs font-bold text-on-surface flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full" [class.bg-emerald-500]="!ms.isDegraded" [class.bg-rose-500]="ms.isDegraded"></span>
+                <span>{{ ms.name }}</span>
+              </div>
+              <div class="text-[10px] text-outline font-mono mt-0.5">{{ ms.hostname }} :{{ ms.port }}</div>
+            </div>
+            <span
+              class="px-2 py-0.5 rounded text-[10px] font-mono font-bold"
+              [class.bg-emerald-50]="!ms.isDegraded"
+              [class.text-emerald-800]="!ms.isDegraded"
+              [class.bg-rose-100]="ms.isDegraded"
+              [class.text-rose-800]="ms.isDegraded"
+            >
+              {{ ms.httpStatus }} {{ ms.isDegraded ? 'Timeout' : 'OK' }}
+            </span>
+          </div>
+
+          <!-- Métricas de latencia y CPU -->
+          <div class="space-y-2 pt-1">
+            <div class="flex justify-between text-xs font-mono">
+              <span class="text-outline">Latencia:</span>
+              <span class="font-bold text-on-surface">{{ ms.latency }}</span>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-[10px] font-mono">
+                <span class="text-outline">Carga de CPU</span>
+                <span [class.text-rose-600]="ms.cpuPercent > 80" [class.font-bold]="ms.cpuPercent > 80">
+                  {{ ms.cpuPercent }}%
+                </span>
+              </div>
+              <div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                <div
+                  class="h-full rounded-full transition-all duration-500"
+                  [style.width.%]="ms.cpuPercent"
+                  [class.bg-primary]="ms.cpuPercent < 70"
+                  [class.bg-amber-500]="ms.cpuPercent >= 70 && ms.cpuPercent < 90"
+                  [class.bg-rose-600]="ms.cpuPercent >= 90"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Sección: Trazas de Transacciones Cross-Service -->
+  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden">
+    <div class="p-6 border-b border-surface-container-highest flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+      <div>
+        <h2 class="text-base font-bold text-on-surface">Trazas de Transacciones Cross-Service</h2>
+        <p class="text-xs text-on-surface-variant">Correlation IDs de extremo a extremo propagados entre API Gateway y Apache Kafka.</p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="relative flex-1 sm:w-64">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[16px]">search</span>
+          <input
+            type="text"
+            [value]="searchTerm()"
+            (input)="onSearch($event)"
+            placeholder="Buscar por Trace ID o endpoint..."
+            class="w-full pl-9 pr-4 py-2 bg-surface-container-high rounded-xl text-xs text-on-surface placeholder:text-outline border-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-outline font-medium">Estado:</span>
+          <select
+            [value]="selectedStatusFilter()"
+            (change)="onSelectStatus($event)"
+            class="bg-surface-container-high rounded-xl text-xs px-3 py-2 text-on-surface border-none focus:ring-2 focus:ring-primary font-medium"
+          >
+            <option value="Todos">Todos los Estados</option>
+            <option value="200">200 OK</option>
+            <option value="503">503 Timeout</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de Trazas -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-surface-container-low text-on-surface-variant font-semibold border-b border-surface-container-highest">
+          <tr>
+            <th class="py-3.5 px-4">Trace ID</th>
+            <th class="py-3.5 px-4">Flujo de Microservicios Involucrados</th>
+            <th class="py-3.5 px-4">Endpoint Solicitado</th>
+            <th class="py-3.5 px-4 text-center">Estado HTTP</th>
+            <th class="py-3.5 px-4 text-right">Latencia Total</th>
+            <th class="py-3.5 px-4 text-right">Timestamp</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-surface-container-highest font-mono">
+          @for (tr of filteredTraces(); track tr.traceId) {
+            <tr class="hover:bg-surface-container-low transition-colors">
+              <td class="py-3.5 px-4 font-bold text-primary">{{ tr.traceId }}</td>
+              <td class="py-3.5 px-4 font-sans font-medium text-on-surface">{{ tr.flow }}</td>
+              <td class="py-3.5 px-4 text-on-surface-variant">{{ tr.endpoint }}</td>
+              <td class="py-3.5 px-4 text-center font-sans">
+                <span
+                  class="px-2 py-0.5 rounded-full text-[11px] font-semibold font-mono"
+                  [class.bg-emerald-50]="tr.httpStatus === 200"
+                  [class.text-emerald-700]="tr.httpStatus === 200"
+                  [class.bg-rose-50]="tr.httpStatus !== 200"
+                  [class.text-rose-700]="tr.httpStatus !== 200"
+                >
+                  {{ tr.httpStatus }}
+                </span>
+              </td>
+              <td class="py-3.5 px-4 text-right font-bold" [class.text-rose-600]="tr.httpStatus !== 200" [class.text-on-surface]="tr.httpStatus === 200">
+                {{ tr.totalLatency }}
+              </td>
+              <td class="py-3.5 px-4 text-right text-outline font-sans text-[11px]">{{ tr.timestamp }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="py-8 text-center text-outline font-sans">
+                No se encontraron trazas con los filtros seleccionados
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginación -->
+    <div class="flex flex-col sm:flex-row justify-between items-center px-6 py-4 border-t border-surface-container-highest gap-4 font-sans">
+      <span class="text-xs text-on-surface-variant">Mostrando {{ filteredTraces().length }} de 1,420 trazas recientes</span>
+      <div class="flex items-center gap-1.5">
+        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium disabled:opacity-50" disabled>
+          Anterior
+        </button>
+        <button class="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-medium">1</button>
+        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium">2</button>
+        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium">
+          Siguiente
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

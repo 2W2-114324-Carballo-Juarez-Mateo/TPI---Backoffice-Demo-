@@ -1,0 +1,286 @@
+<div class="p-8 space-y-8 max-w-7xl mx-auto">
+  <!-- Top Welcome & Quick Metric Banner -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div>
+      <div class="flex items-center gap-2 mb-1">
+        <span class="text-xs font-mono px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">MOD-01</span>
+        <span class="text-xs text-outline">•</span>
+        <span class="text-xs text-outline">Panel General & Operativo</span>
+      </div>
+      <h1 class="text-2xl font-bold text-on-surface tracking-tight">Dashboard Consolidado</h1>
+      <p class="text-sm text-on-surface-variant mt-0.5">Monitoreo en tiempo real de microservicios, flujo académico y trazabilidad FRC.</p>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 bg-surface-container-highest px-4 py-2 rounded-xl text-xs text-on-surface-variant font-medium">
+        <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+        <span>Ciclo Lectivo 2026 - Q1</span>
+      </div>
+      <button
+        (click)="forceSync()"
+        [disabled]="isSyncing()"
+        class="bg-primary hover:bg-primary-container text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm disabled:opacity-50"
+      >
+        <span class="material-symbols-outlined text-[16px]" [class.animate-spin]="isSyncing()">sync</span>
+        <span>{{ isSyncing() ? 'Sincronizando...' : 'Forzar Sincronización' }}</span>
+      </button>
+    </div>
+  </div>
+
+  @if (syncMessage()) {
+    <div class="bg-primary-fixed/30 border border-primary/20 text-on-primary-fixed px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
+      <span class="material-symbols-outlined text-primary text-[18px]">info</span>
+      <span>{{ syncMessage() }}</span>
+    </div>
+  }
+
+  @if (toastAlerts()) {
+    <div class="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
+      <span class="material-symbols-outlined text-amber-600 text-[18px]">notification_important</span>
+      <span>{{ toastAlerts() }}</span>
+    </div>
+  }
+
+  <!-- Bento Grid KPIs -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    @for (kpi of kpis(); track kpi.title) {
+      <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between hover:border-primary/40 transition-all">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-semibold text-outline uppercase tracking-wider">{{ kpi.title }}</span>
+          <span class="p-2 rounded-xl bg-surface-container-high text-primary material-symbols-outlined text-[20px]">{{ kpi.icon }}</span>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-on-surface font-mono tracking-tight">{{ kpi.value }}</div>
+          <div class="flex items-center justify-between mt-2 pt-2 border-t border-surface-container-highest">
+            <span class="text-[11px] font-semibold text-emerald-700 flex items-center gap-0.5">
+              <span class="material-symbols-outlined text-[14px]">trending_up</span>
+              {{ kpi.delta }}
+            </span>
+            <span class="text-[11px] text-outline font-mono">{{ kpi.api }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Middle Grid: Gráfico de Actividad Semanal (2 cols) + Alertas del Sistema (1 col) -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Gráfico Actividad Semanal Cross-Servicio (2 columnas) -->
+    <div class="lg:col-span-2 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div>
+          <h2 class="text-base font-bold text-on-surface tracking-tight">Actividad Semanal Cross-Servicio</h2>
+          <p class="text-xs text-on-surface-variant">Volumen de invocaciones REST y eventos Kafka procesados en campus</p>
+        </div>
+        <div class="flex items-center gap-1 bg-surface-container-high p-1 rounded-lg text-xs font-medium">
+          <button
+            (click)="setTimeRange('7d')"
+            [class.bg-white]="timeRange() === '7d'"
+            [class.text-primary]="timeRange() === '7d'"
+            [class.shadow-xs]="timeRange() === '7d'"
+            class="px-3 py-1 rounded-md text-on-surface-variant transition-all hover:text-on-surface"
+          >
+            7 Días
+          </button>
+          <button
+            (click)="setTimeRange('30d')"
+            [class.bg-white]="timeRange() === '30d'"
+            [class.text-primary]="timeRange() === '30d'"
+            [class.shadow-xs]="timeRange() === '30d'"
+            class="px-3 py-1 rounded-md text-on-surface-variant transition-all hover:text-on-surface"
+          >
+            30 Días
+          </button>
+          <button
+            (click)="setTimeRange('year')"
+            [class.bg-white]="timeRange() === 'year'"
+            [class.text-primary]="timeRange() === 'year'"
+            [class.shadow-xs]="timeRange() === 'year'"
+            class="px-3 py-1 rounded-md text-on-surface-variant transition-all hover:text-on-surface"
+          >
+            Año
+          </button>
+        </div>
+      </div>
+
+      <!-- Gráfico de barras SVG / HTML -->
+      <div class="h-56 flex items-end justify-between gap-3 pt-6 pb-2 px-2 border-b border-surface-container-highest">
+        @for (item of weeklyActivity(); track item.day) {
+          <div class="flex-1 flex flex-col items-center gap-2 group relative">
+            <!-- Tooltip en hover -->
+            <div class="absolute -top-10 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded shadow pointer-events-none whitespace-nowrap z-10 font-mono">
+              {{ item.date }}: {{ item.value }} reqs
+            </div>
+            <!-- Barra con altura relativa -->
+            <div class="w-full max-w-[36px] bg-surface-container-high rounded-t-md relative overflow-hidden flex items-end h-44">
+              <div
+                class="w-full rounded-t-md transition-all duration-500"
+                [style.height.%]="item.heightPercent"
+                [class.bg-primary]="!item.isPeak"
+                [class.bg-primary-container]="item.isPeak"
+              ></div>
+            </div>
+            <!-- Label del día -->
+            <span class="text-[11px] font-medium" [class.text-primary]="item.isPeak" [class.font-bold]="item.isPeak" [class.text-outline]="!item.isPeak">
+              {{ item.day }}
+            </span>
+          </div>
+        }
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 mt-4 pt-2 text-xs text-on-surface-variant">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-sm bg-primary"></span>
+            <span>Consultas API Gateway</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-sm bg-primary-container"></span>
+            <span>Tráfico Histórico Promedio</span>
+          </div>
+        </div>
+        <div class="font-mono text-xs font-semibold text-primary">
+          Pico máx: 9,842 req/min
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel de Alertas del Sistema (1 columna) -->
+    <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-[20px]">notifications_active</span>
+            <h2 class="text-base font-bold text-on-surface tracking-tight">Alertas del Sistema</h2>
+          </div>
+          <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800">2 Avisos</span>
+        </div>
+        <p class="text-xs text-on-surface-variant mb-4">Eventos operacionales detectados en clúster FRC</p>
+
+        <div class="space-y-3">
+          @for (alert of alerts(); track alert.id) {
+            <div
+              class="p-3.5 rounded-xl border transition-all hover:bg-surface-container-low"
+              [class.bg-amber-50]="alert.severity === 'warning'"
+              [class.border-amber-200]="alert.severity === 'warning'"
+              [class.bg-surface-container-low]="alert.severity === 'info'"
+              [class.border-outline-variant]="alert.severity === 'info'"
+              [class.bg-emerald-50]="alert.severity === 'success'"
+              [class.border-emerald-200]="alert.severity === 'success'"
+            >
+              <div class="flex items-center justify-between mb-1">
+                <span
+                  class="text-xs font-bold"
+                  [class.text-amber-800]="alert.severity === 'warning'"
+                  [class.text-on-surface]="alert.severity === 'info'"
+                  [class.text-emerald-800]="alert.severity === 'success'"
+                >
+                  {{ alert.title }}
+                </span>
+                <span class="text-[10px] text-outline font-mono">{{ alert.timeAgo }}</span>
+              </div>
+              <p class="text-xs text-on-surface-variant leading-relaxed">{{ alert.description }}</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-surface-container-highest">
+        <button
+          (click)="viewAllAlerts()"
+          class="w-full text-center py-2 px-3 rounded-xl border border-outline-variant/50 hover:bg-surface-container text-xs font-semibold text-primary flex items-center justify-center gap-1 transition-colors"
+        >
+          <span>Ver Todas las Alertas (14)</span>
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de Transacciones Cross-Microservicio -->
+  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden">
+    <div class="p-6 border-b border-surface-container-highest flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div>
+        <h2 class="text-base font-bold text-on-surface">Transacciones Recientes Cross-Microservicio</h2>
+        <p class="text-xs text-on-surface-variant">Auditoría at-least-once y trazabilidad Kafka con idempotencia.</p>
+      </div>
+      <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="relative flex-1 sm:w-64">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[16px]">search</span>
+          <input
+            type="text"
+            [value]="searchTerm()"
+            (input)="onSearch($event)"
+            placeholder="Buscar por ID, origen o evento..."
+            class="w-full pl-9 pr-4 py-2 bg-surface-container-high rounded-xl text-xs text-on-surface placeholder:text-outline border-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+        <button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+          <span class="material-symbols-outlined text-[16px]">filter_list</span>
+          <span>Filtrar</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-surface-container-low text-on-surface-variant font-semibold border-b border-surface-container-highest">
+          <tr>
+            <th class="py-3.5 px-4">ID Transacción</th>
+            <th class="py-3.5 px-4">Origen</th>
+            <th class="py-3.5 px-4">Destino</th>
+            <th class="py-3.5 px-4">Acción / Evento</th>
+            <th class="py-3.5 px-4">Estado</th>
+            <th class="py-3.5 px-4">Timestamp (UTC)</th>
+            <th class="py-3.5 px-4 text-right">Latencia</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-surface-container-highest">
+          @for (trx of filteredTransactions(); track trx.id) {
+            <tr class="hover:bg-surface-container-low transition-colors">
+              <td class="py-3.5 px-4 font-mono text-primary font-medium">{{ trx.id }}</td>
+              <td class="py-3.5 px-4 font-medium text-on-surface">{{ trx.origin }}</td>
+              <td class="py-3.5 px-4 font-medium text-on-surface">{{ trx.destination }}</td>
+              <td class="py-3.5 px-4 text-on-surface-variant">{{ trx.action }}</td>
+              <td class="py-3.5 px-4">
+                <span
+                  class="inline-flex items-center px-2 py-0.5 rounded-full font-medium text-[11px]"
+                  [class.bg-emerald-50]="trx.status === 'Completado'"
+                  [class.text-emerald-700]="trx.status === 'Completado'"
+                  [class.bg-amber-50]="trx.status === 'Reintentando'"
+                  [class.text-amber-700]="trx.status === 'Reintentando'"
+                >
+                  {{ trx.status }}
+                </span>
+              </td>
+              <td class="py-3.5 px-4 font-mono text-on-surface-variant">{{ trx.timestamp }}</td>
+              <td class="py-3.5 px-4 text-right font-mono font-medium">{{ trx.latency }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="py-8 text-center text-outline">
+                No se encontraron transacciones con el criterio de búsqueda especificado
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table Pagination Footer -->
+    <div class="flex flex-col sm:flex-row justify-between items-center px-6 py-4 border-t border-surface-container-highest gap-4">
+      <span class="text-xs text-on-surface-variant">Mostrando {{ filteredTransactions().length }} de 14,820 transacciones registradas hoy</span>
+      <div class="flex items-center gap-1.5">
+        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium disabled:opacity-50" disabled>
+          Anterior
+        </button>
+        <button class="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-medium">1</button>
+        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium">2</button>
+        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium">3</button>
+        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium">
+          Siguiente
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<aside class="w-72 bg-surface-container-low border-r border-outline-variant/40 flex flex-col flex-shrink-0 z-30 shadow-sm h-full select-none">
+  <!-- Buscador rápido de módulos -->
+  <div class="p-3 border-b border-outline-variant/30 flex-shrink-0">
+    <div class="relative">
+      <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+      <input
+        type="text"
+        [value]="searchTerm()"
+        (input)="onSearch($event)"
+        placeholder="Filtrar módulos (1 al 9)..."
+        class="w-full pl-8 pr-3 py-1.5 text-xs bg-surface-container-lowest border border-outline-variant/50 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-outline"
+      />
+    </div>
+  </div>
+
+  <!-- Lista de Navegación con Scroll -->
+  <nav class="flex-1 px-2.5 py-3 space-y-1.5 overflow-y-auto">
+    @for (mod of filteredModules(); track mod.route) {
+      <a
+        [routerLink]="mod.route"
+        routerLinkActive="bg-primary text-on-primary font-semibold shadow-sm"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="w-full text-left flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface group"
+      >
+        <div class="flex items-center gap-2.5 truncate">
+          <span class="material-symbols-outlined text-[19px] transition-colors group-hover:text-primary">
+            {{ mod.icon }}
+          </span>
+          <span class="truncate">{{ mod.label }}</span>
+        </div>
+        <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant group-hover:bg-surface-container">
+          {{ mod.badge }}
+        </span>
+      </a>
+    } @empty {
+      <div class="px-3 py-6 text-center text-xs text-outline">
+        No se encontraron módulos
+      </div>
+    }
+  </nav>
+
+  <!-- Footer Institucional de la barra lateral -->
+  <div class="p-3 bg-surface-container border-t border-outline-variant/30 text-[11px] text-on-surface-variant flex-shrink-0">
+    <div class="flex items-center justify-between mb-2">
+      <app-logo-utn class="h-5 w-auto opacity-85 block" />
+      <span class="font-mono font-bold text-primary bg-primary-fixed/60 px-1.5 py-0.5 rounded text-[10px]">
+        v2.4.0
+      </span>
+    </div>
+    <div class="flex items-center justify-between text-[10px] text-outline font-mono">
+      <span>UTN FRC • Tema 12</span>
+      <span>Angular 21</span>
+    </div>
+  </div>
+</aside>

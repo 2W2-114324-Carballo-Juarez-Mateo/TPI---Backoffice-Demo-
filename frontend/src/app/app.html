@@ -1,0 +1,14 @@
+<div class="h-full flex flex-col overflow-hidden">
+  <!-- Header Institucional Único -->
+  <app-header />
+
+  <!-- Layout: Sidebar Único + Router Outlet (Cero Iframes, Cero Paneles Duplicados) -->
+  <div class="flex-1 flex overflow-hidden">
+    <app-sidebar />
+
+    <!-- Viewport Principal de la SPA -->
+    <main class="flex-1 overflow-y-auto bg-surface relative">
+      <router-outlet />
+    </main>
+  </div>
+</div>
