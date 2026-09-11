@@ -6,7 +6,7 @@ Módulo **Backoffice Institucional, Analítica y Configuración Global**.
 ## Estructura
 
 ```
-backend/
+BE/
 ├── contracts/                    # DTOs y envelope de eventos compartidos
 ├── infrastructure/
 │   ├── eureka-server/            # Service Discovery · :8761

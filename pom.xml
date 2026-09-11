@@ -19,12 +19,12 @@
     <description>TPI Backoffice - scaffolding multi-modulo (G06)</description>
 
     <modules>
-        <module>backend/contracts</module>
-        <module>backend/infrastructure/eureka-server</module>
-        <module>backend/infrastructure/config-server</module>
-        <module>backend/infrastructure/gateway-local</module>
-        <module>backend/administration-service</module>
-        <module>backend/reporting-service</module>
+        <module>BE/contracts</module>
+        <module>BE/infrastructure/eureka-server</module>
+        <module>BE/infrastructure/config-server</module>
+        <module>BE/infrastructure/gateway-local</module>
+        <module>BE/administration-service</module>
+        <module>BE/reporting-service</module>
     </modules>
 
     <properties>

@@ -3,7 +3,7 @@ services:
   # ---------- Infraestructura ----------
   postgres-admin:
     image: postgres:16
-    container_name: postgres-admin
+    container_name: backoffice-demo-pg-admin
     environment:
       POSTGRES_USER: backoffice
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-backoffice123}
@@ -11,7 +11,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pg-admin-data:/var/lib/postgresql/data
+      - backoffice-demo-pg-admin-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U backoffice"]
       interval: 10s
@@ -20,7 +20,7 @@ services:
 
   postgres-reporting:
     image: postgres:16
-    container_name: postgres-reporting
+    container_name: backoffice-demo-pg-reporting
     environment:
       POSTGRES_USER: backoffice
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-backoffice123}
@@ -28,7 +28,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - pg-reporting-data:/var/lib/postgresql/data
+      - backoffice-demo-pg-reporting-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U backoffice"]
       interval: 10s
@@ -37,7 +37,7 @@ services:
 
   kafka:
     image: apache/kafka:3.9.0        # KRaft (sin ZooKeeper)
-    container_name: kafka
+    container_name: backoffice-demo-kafka
     ports:
       - "9092:9092"
     environment:
@@ -53,18 +53,21 @@ services:
   eureka-server:
     build:
       context: ..
-      dockerfile: backend/infrastructure/eureka-server/Dockerfile
-    container_name: eureka-server
+      dockerfile: BE/infrastructure/eureka-server/Dockerfile
+    container_name: backoffice-demo-eureka
     ports:
       - "8761:8761"
 
   config-server:
     build:
       context: ..
-      dockerfile: backend/infrastructure/config-server/Dockerfile
-    container_name: config-server
+      dockerfile: BE/infrastructure/config-server/Dockerfile
+    container_name: backoffice-demo-config
     ports:
       - "8888:8888"
+    environment:
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      CONFIG_DIR: /config
     volumes:
       - ../config:/config
     depends_on:
@@ -73,10 +76,12 @@ services:
   gateway-local:
     build:
       context: ..
-      dockerfile: backend/infrastructure/gateway-local/Dockerfile
-    container_name: gateway-local
+      dockerfile: BE/infrastructure/gateway-local/Dockerfile
+    container_name: backoffice-demo-gateway
     ports:
       - "8080:8080"
+    environment:
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
     depends_on:
       - eureka-server
       - config-server
@@ -85,8 +90,8 @@ services:
   administration-service:
     build:
       context: ..
-      dockerfile: backend/administration-service/Dockerfile
-    container_name: administration-service
+      dockerfile: BE/administration-service/Dockerfile
+    container_name: backoffice-demo-admin
     ports:
       - "8092:8092"
     environment:
@@ -104,8 +109,8 @@ services:
   reporting-service:
     build:
       context: ..
-      dockerfile: backend/reporting-service/Dockerfile
-    container_name: reporting-service
+      dockerfile: BE/reporting-service/Dockerfile
+    container_name: backoffice-demo-reporting
     ports:
       - "8093:8093"
     environment:
@@ -120,5 +125,5 @@ services:
         condition: service_started
 
 volumes:
-  pg-admin-data:
-  pg-reporting-data:
+  backoffice-demo-pg-admin-data:
+  backoffice-demo-pg-reporting-data:

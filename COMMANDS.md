@@ -22,7 +22,7 @@ docker compose -f .compose/docker-compose.yml up -d
 
 ### 4. Correr un servicio en local (con perfil docker)
 ```bash
-cd backend/administration-service
+cd BE/administration-service
 mvn spring-boot:run -Dspring-boot.run.profiles=docker
 ```
 
