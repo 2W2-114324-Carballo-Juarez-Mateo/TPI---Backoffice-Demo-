@@ -58,3 +58,9 @@ Navegar a `http://localhost:4200/`. La aplicación recarga automáticamente ante
 node ./node_modules/typescript/bin/tsc --noEmit
 ```
 *(Cero errores de compilación garantizados).*
+
+---
+
+## Deploy en GitHub Pages
+
+El workflow \.github/workflows/deploy-pages.yml\ builda la SPA con base-href \/TPI---Backoffice-Demo-/\ y la publica en GitHub Pages (Source: GitHub Actions) con cada push a \main\ que toque \FE/**\. Deep links soportados via \404.html\. El back no corre en Pages (datos mock).
