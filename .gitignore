@@ -38,3 +38,5 @@ docs/app_doc/*
 !docs/java_doc/.gitkeep
 !docs/api_doc/README.md
 !docs/app_doc/README.md
+# Claves locales
+.compose/.env
