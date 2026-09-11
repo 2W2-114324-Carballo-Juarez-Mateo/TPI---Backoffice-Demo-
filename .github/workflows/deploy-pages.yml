@@ -1,9 +1,10 @@
-name: Deploy to GitHub Pages
+name: Deploy Front a GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - 'FE/**'
   workflow_dispatch:
 
 permissions:
@@ -21,33 +22,37 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: FE
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: 'npm'
+          cache-dependency-path: FE/package-lock.json
 
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: npm ci
 
-      - name: Build Angular SPA
-        run: npx ng build --base-href /backoffice-angular/
+      - name: Build SPA (base-href del repo en Pages)
+        run: npx ng build --base-href /TPI---Backoffice-Demo-/
 
-      - name: Copy index.html to 404.html (SPA routing support)
+      - name: 404.html para deep links del SPA
         run: cp dist/backoffice-angular/browser/index.html dist/backoffice-angular/browser/404.html
 
-      - name: Configure GitHub Pages
+      - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload Pages artifact
+      - name: Subir artefacto
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/backoffice-angular/browser
+          path: FE/dist/backoffice-angular/browser
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy a GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
