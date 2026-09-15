@@ -76,9 +76,9 @@ docker compose -f .compose/docker-compose.yml up -d --build
 
 ## 5 · Seguridad y autorización
 
-- **Validar ≠ autorizar:** el gateway (T01) valida el token; el **microservicio** autoriza por rol y ámbito.
-- **Ámbito multitenancy:** `TenantContext` setea `app.current_course` desde el contexto validado (nunca del request). RLS filtra por `course_id`; `ALL` solo ADMIN y auditado.
-- Roles: `ROLE_ADMIN` (escribe/administra) · `ROLE_TEACHER` (solo su curso) · `ROLE_AUDITOR` (solo lectura de bitácora).
+- **Validar ≠ autorizar:** el gateway (T01) valida el JWT y propaga contexto; el **microservicio** autoriza localmente (`@PreAuthorize`) por rol y ámbito. No validamos firma/exp del token.
+- **Ámbito multitenancy:** `TenantContext` setea `app.current_course` desde el rol validado (nunca del request). RLS filtra por `course_id`; `ALL` se deriva server-side del rol `ADMIN` (no viaja en token/headers) y se audita.
+- Roles reales: `ADMIN` (escribe/administra) · `PROFESOR` (solo su curso) · `ALUMNO` · `MS` (service-to-service). **No existe `AUDITOR`**.
 - **Secretos:** nada de claves en repo/logs/respuestas; enmascarar (ej. API keys `sk-****`).
 
 ## 6 · Docker, despliegue, Flyway

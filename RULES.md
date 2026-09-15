@@ -17,9 +17,11 @@
 - **REST + eventos (Kafka, RabbitMQ = alternativa):** escrituras por comando síncrono y/o evento con **Outbox en la misma transacción**; lecturas de otros temas por contratos REST → read models.
 - **Idempotencia obligatoria** en consumidores (`event_id` + versión monótona) y soporte `Idempotency-Key` en operaciones críticas.
 - **Multitenancy + RLS:** filtro por `course_id` desde `TenantContext` (nunca del request); RLS como refuerzo; `ALL` solo ADMIN y auditado.
-- **Validar ≠ autorizar:** gateway valida (T01); el microservicio autoriza por rol y ámbito (`ROLE_ADMIN`/`ROLE_TEACHER`/`ROLE_AUDITOR`).
-- **Trazabilidad:** correlationId en logs y trazas distribuidas; logs estructurados.
-- Invariantes de negocio (último ADMIN, auto-eliminación, baja reforzada 2FA, evaluador único + calibración PAR-14, auditoría inmutable, anonimato de encuestas): **nunca** se negocian en código.
+- **Validar ≠ autorizar:** el gateway (T01) valida el JWT y propaga contexto (`X-User-Roles`, `X-User-Id`, `traceparent`, `X-Request-Id`); el microservicio **autoriza localmente** (`@PreAuthorize`) por rol y ámbito. Roles reales: `ADMIN` / `PROFESOR` / `ALUMNO` (+ `MS` solo service-to-service). **No existe `AUDITOR`** (lectura de auditoría = `ADMIN`). Alcance global `ALL` se deriva server-side del rol `ADMIN` (no viaja en token/headers).
+- **Convención de rutas:** toda API bajo `/api/{servicio}/**` (nosotros: `/api/administration/**` y `/api/reports/**`, incl. `export`/`alerts`). Consumidos de T01: `/api/users/audit`, `/api/users/retention/*`.
+- **Trazabilidad:** `traceparent` (W3C) + `X-Request-Id` en logs y trazas distribuidas; logs estructurados.
+- **Auditoría/retención:** emitimos eventos en `audit.events` (v1, envelope + `role`); T01 persiste. **Nunca purgamos por nuestra cuenta**; alineamos read models ante `DataAnonymized`/`RetentionDecisionCreated` (payload `entityType`/`entityId`).
+- Invariantes de negocio (último ADMIN, auto-eliminación, baja reforzada 2FA, evaluador único + calibración PAR-14, auditoría inmutable, anonimato de encuestas): **nunca** se negocian en código. Las reglas de ADMIN (último ADMIN, baja 2FA) las valida **100% users-service** (T01); no las reimplementamos.
 
 ## 2 · Arquitectura (Front)
 
@@ -37,7 +39,12 @@
 
 ## 4 · Proceso y DoD
 
-- **Repos:** la IA y el equipo trabajan en ramas `feature/<tema>`; **PR con ≥ 1 review** de compañero; `main` protegido. Mensajes de commit en español, formato convencional (ej. `feat(administration): endpoint de parámetros`).
+- **Flujo de ramas (obligatorio):**
+  - Cada dev trabaja en **su propia rama** `feature/<tema>` (o `fix/<tema>`), creada desde **`develop`**.
+  - Al terminar, **PR a `develop`** (no a `main`) con **≥ 1 review** de un compañero.
+  - **`main` se actualiza recién al final** (entrega/cierre), no durante el sprint.
+  - **Excepción (ahora):** las actualizaciones de **scaffolding** (esta etapa inicial) van directo a `main`; a partir de que arranque el desarrollo, todo va por `develop`.
+- **Commits:** en español, formato convencional (ej. `feat(administration): endpoint de parámetros`).
 - **Estimación:** historia = **SP (Fibonacci)**, tarea = **horas**. Convención de tareas: `[G06] - [ROL] - [Descripción]`. Roles: BACKEND / FRONTEND / TEST / DOCUMENTACION / REVISION.
 - **DoD (3 niveles):** **N0 Tarea** (pasos cumplidos + horas reales) · **N1 Historia** (testeado, cobertura, sin deuda, documentado) · **N2 Entrega** (demo funcionando de punta a punta, docs al día, sin pendientes críticos). Nivel 0 es condición para avanzar.
 - **Backlog:** todo lo pendiente vive en el backlog general de Sprint 0; no atar tareas a sprint hasta que la propuesta lo defina.
