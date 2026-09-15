@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ArcadeBadgeComponent } from '../../shared/arcade/arcade-badge/arcade-badge.component';
 
 export interface GlobalParameter {
   readonly code: string;
@@ -13,7 +14,7 @@ export interface GlobalParameter {
 
 @Component({
   selector: 'app-parametros-globales',
-  imports: [],
+  imports: [ArcadeBadgeComponent],
   templateUrl: './parametros-globales.html',
   styleUrl: './parametros-globales.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

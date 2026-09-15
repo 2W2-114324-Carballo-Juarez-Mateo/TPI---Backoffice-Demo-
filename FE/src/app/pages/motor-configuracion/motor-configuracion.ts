@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ArcadeBadgeComponent } from '../../shared/arcade/arcade-badge/arcade-badge.component';
 
 export interface OperationalParam {
   readonly code: string;
@@ -23,7 +24,7 @@ export interface AdminAuditEntry {
 
 @Component({
   selector: 'app-motor-configuracion',
-  imports: [],
+  imports: [ArcadeBadgeComponent],
   templateUrl: './motor-configuracion.html',
   styleUrl: './motor-configuracion.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

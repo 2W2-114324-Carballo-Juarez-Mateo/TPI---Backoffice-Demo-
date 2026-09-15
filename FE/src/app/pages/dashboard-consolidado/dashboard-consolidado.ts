@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ArcadeBadgeComponent } from '../../shared/arcade/arcade-badge/arcade-badge.component';
 
 export interface TransactionLog {
   readonly id: string;
@@ -28,7 +29,7 @@ export interface DayActivity {
 
 @Component({
   selector: 'app-dashboard-consolidado',
-  imports: [],
+  imports: [ArcadeBadgeComponent],
   templateUrl: './dashboard-consolidado.html',
   styleUrl: './dashboard-consolidado.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

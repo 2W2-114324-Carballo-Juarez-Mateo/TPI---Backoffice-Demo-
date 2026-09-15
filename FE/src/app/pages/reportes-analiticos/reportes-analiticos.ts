@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ArcadeBadgeComponent } from '../../shared/arcade/arcade-badge/arcade-badge.component';
 
 export interface XpLevelDistribution {
   readonly level: string;
@@ -18,7 +19,7 @@ export interface CatedraPerformance {
 
 @Component({
   selector: 'app-reportes-analiticos',
-  imports: [],
+  imports: [ArcadeBadgeComponent],
   templateUrl: './reportes-analiticos.html',
   styleUrl: './reportes-analiticos.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

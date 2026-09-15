@@ -1,36 +1,60 @@
-<header class="h-16 bg-[#0F172A] text-white flex-shrink-0 z-40 flex items-center justify-between px-6 shadow-md border-b border-slate-800">
-  <!-- Izquierda: Identidad Institucional & Gateway -->
+<header class="h-16 bg-surface/95 backdrop-blur-md text-ink flex-shrink-0 z-40 flex items-center justify-between px-4 sm:px-6 shadow-sm border-b-2 border-line transition-colors duration-200">
+  <!-- Izquierda: Identidad Retro Arcade & Gateway -->
   <div class="flex items-center gap-4">
     <div class="flex items-center gap-3">
-      <div class="bg-white px-2.5 py-1.5 rounded-lg shadow-sm flex items-center justify-center border border-white/20">
-        <app-logo-utn class="h-7 w-auto block" />
+      <div class="bg-surface-2 px-2.5 py-1.5 rounded-sm border-2 border-line shadow-sm flex items-center justify-center">
+        <app-logo-utn class="h-6 w-auto block" />
       </div>
       <div>
-        <span class="font-bold text-sm tracking-tight leading-tight block">UTN FRC Backoffice</span>
-        <span class="text-slate-400 text-xs font-mono block">Tema 12 • Angular 21 SPA</span>
+        <div class="flex items-center gap-2">
+          <span class="font-retro text-xs sm:text-sm tracking-tight text-brand font-bold">TUP ARCADE</span>
+          <app-arcade-badge tone="magenta" appearance="solid" size="sm">v0.2.2</app-arcade-badge>
+        </div>
+        <span class="text-ink-soft text-xs font-mono block mt-0.5">BACKOFFICE INSTITUCIONAL • TEMA 12</span>
       </div>
     </div>
 
-    <!-- Píldora Kafka -->
-    <div class="hidden md:flex items-center gap-2 bg-emerald-950/70 border border-emerald-500/30 px-3 py-1 rounded-full text-xs text-emerald-300">
-      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      <span class="font-mono">Kafka API Gateway ({{ systemStatus().servicesOnline }}/{{ systemStatus().servicesTotal }} Servicios OK)</span>
+    <!-- Píldora Kafka Arcade HUD -->
+    <div class="hidden lg:flex items-center gap-2">
+      <app-arcade-badge tone="green" appearance="solid" size="md">
+        <span class="w-2 h-2 rounded-full bg-slate-950 animate-pulse mr-1"></span>
+        <span>KAFKA GATEWAY: {{ systemStatus().servicesOnline }}/{{ systemStatus().servicesTotal }} OK</span>
+      </app-arcade-badge>
     </div>
   </div>
 
-  <!-- Derecha: Seguridad 2FA & Perfil Docente -->
+  <!-- Derecha: Selector de Tema, Seguridad 2FA & Perfil Docente -->
   <div class="flex items-center gap-3">
-    <div class="hidden sm:flex items-center gap-1.5 bg-blue-900/50 border border-blue-400/30 px-3 py-1 rounded-full text-blue-200 text-xs">
-      <span class="material-symbols-outlined text-[15px] text-blue-300">verified_user</span>
-      <span class="font-medium tracking-wide uppercase text-[10px]">2FA Verificado</span>
+    <!-- Toggle Tema Claro / Oscuro (PiposLibrary Theme Switcher) -->
+    <button
+      (click)="themeService.toggleTheme()"
+      [title]="themeService.currentTheme() === 'light' ? 'Cambiar a tema oscuro' : 'Cambiar a tema claro'"
+      class="btn-arcade-pipos btn-arcade-neutral px-2.5 py-1.5 flex items-center gap-2"
+    >
+      @if (themeService.currentTheme() === 'light') {
+        <span class="text-[13px] leading-none">🌙</span>
+        <span class="hidden md:inline text-[8px] font-retro">CYBER DARK</span>
+      } @else {
+        <span class="text-[13px] leading-none">☀️</span>
+        <span class="hidden md:inline text-[8px] font-retro">RETRO LIGHT</span>
+      }
+    </button>
+
+    <!-- Píldora 2FA -->
+    <div class="hidden sm:block">
+      <app-arcade-badge tone="cyan" appearance="outline" size="md">
+        <span class="material-symbols-outlined text-[12px] mr-1">verified_user</span>
+        <span>2FA OK</span>
+      </app-arcade-badge>
     </div>
 
-    <div class="flex items-center gap-3 bg-slate-800/80 px-3.5 py-1.5 rounded-lg border border-slate-700/60">
+    <!-- Tarjeta Perfil Docente -->
+    <div class="flex items-center gap-2.5 bg-surface-2 px-3 py-1.5 rounded-sm border border-line">
       <div class="flex flex-col text-right">
-        <span class="text-xs font-semibold leading-tight text-white">{{ systemStatus().userName }}</span>
-        <span class="text-[10px] text-slate-300 font-mono leading-tight">Rol: {{ systemStatus().userRole }}</span>
+        <span class="text-xs font-bold leading-tight text-ink">{{ systemStatus().userName }}</span>
+        <span class="text-[9px] text-ink-soft font-mono leading-tight">{{ systemStatus().userRole }}</span>
       </div>
-      <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm font-semibold text-xs">
+      <div class="w-7 h-7 rounded-sm bg-brand flex items-center justify-center text-white font-retro text-[9px] shadow-sm">
         {{ systemStatus().userInitials }}
       </div>
     </div>

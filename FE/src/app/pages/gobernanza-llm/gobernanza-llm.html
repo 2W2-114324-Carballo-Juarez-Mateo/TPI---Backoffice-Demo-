@@ -1,86 +1,84 @@
-<div class="p-8 space-y-8 max-w-7xl mx-auto">
-  <!-- Cabecera -->
+<div class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto">
+  <!-- Cabecera Arcade -->
   <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
     <div>
-      <div class="flex items-center gap-2 mb-1">
-        <span class="text-xs font-mono px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">MOD-08</span>
-        <span class="text-xs text-outline">•</span>
-        <span class="text-xs text-outline font-semibold text-primary">Tema 12 • FRC Core</span>
+      <div class="flex items-center gap-2 mb-1.5">
+        <app-arcade-badge tone="cyan" appearance="solid" size="sm">MOD-08</app-arcade-badge>
+        <span class="text-ink-soft">•</span>
+        <span class="text-xs font-mono font-bold text-ink-soft uppercase tracking-wider">Tema 12 • FRC Core</span>
       </div>
-      <h1 class="text-2xl font-bold text-on-surface tracking-tight">Gobernanza de Modelos LLM & Calibración Golden Set</h1>
-      <p class="text-sm text-on-surface-variant mt-0.5">Control agnóstico multi-proveedor, asignación de evaluador único (RF-IA-25) y homologación PAR-14.</p>
+      <h1 class="text-2xl sm:text-3xl font-black text-ink tracking-tight">Gobernanza de Modelos LLM & Calibración Golden Set</h1>
+      <p class="text-xs sm:text-sm text-ink-soft mt-0.5 font-medium">Control agnóstico multi-proveedor, asignación de evaluador único (RF-IA-25) y homologación PAR-14.</p>
     </div>
 
     <div class="flex items-center gap-3">
-      <div class="hidden sm:flex items-center gap-2 bg-surface-container-high px-3 py-2 rounded-xl text-xs font-mono text-outline border border-outline-variant/30">
-        <span class="material-symbols-outlined text-[16px] text-primary">lock</span>
+      <div class="hidden sm:flex items-center gap-2 bg-surface-2 px-3 py-2 rounded-sm text-xs font-mono text-ink-soft border border-line">
+        <span class="material-symbols-outlined text-[16px] text-brand">lock</span>
         <span>HSM Azure KeyVault (FIPS 140-2 Level 3)</span>
       </div>
       <button
         (click)="revalidateEndpoints()"
-        class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-colors border border-outline-variant/30"
+        class="btn-arcade-pipos btn-arcade-neutral px-4 py-2 flex items-center gap-2"
       >
         <span class="material-symbols-outlined text-[16px]">verified</span>
-        <span>Re-validar Endpoints</span>
+        <span class="font-mono text-xs">Re-validar Endpoints</span>
       </button>
     </div>
   </div>
 
   @if (feedback()) {
-    <div class="bg-primary-fixed/30 border border-primary/20 text-on-primary-fixed px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
-      <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+    <div class="arcade-card p-3.5 border-brand/60 bg-brand/10 text-brand rounded-sm flex items-center gap-2.5 text-xs font-bold font-mono animate-fadeIn">
+      <span class="material-symbols-outlined text-brand text-[18px]">verified</span>
       <span>{{ feedback() }}</span>
     </div>
   }
 
   <!-- Grid Superior: Proveedores Registrados (Col 1) vs Mapeo Modelo ↔ Función (Col 2) -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    <!-- Columna 1: Catálogo de Proveedores Registrados -->
-    <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Columna 1: Catálogo de Proveedores Registrados Arcade -->
+    <div class="arcade-card arcade-corners p-5 sm:p-6 flex flex-col justify-between">
       <div>
-        <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest mb-4">
+        <div class="flex items-center justify-between pb-3 border-b border-line mb-4">
           <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-[22px]">dns</span>
-            <h2 class="text-base font-bold text-on-surface">Proveedores LLM Conectados</h2>
+            <span class="material-symbols-outlined text-brand text-[22px]">dns</span>
+            <h2 class="text-base font-bold text-ink font-mono">Proveedores LLM Conectados</h2>
           </div>
-          <span class="text-xs font-mono font-semibold px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800">
-            3 Activos
-          </span>
+          <app-arcade-badge tone="green" appearance="solid" size="sm">3 Activos</app-arcade-badge>
         </div>
-        <p class="text-xs text-on-surface-variant mb-4">Conectores agnósticos orquestados por el backend (sin credenciales expuestas en frontend):</p>
+        <p class="text-xs text-ink-soft font-mono mb-4">Conectores agnósticos orquestados por el backend (sin credenciales expuestas en frontend):</p>
 
-        <div class="space-y-3">
+        <div class="space-y-3 font-mono">
           @for (prov of providers(); track prov.id) {
-            <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20 space-y-2">
+            <div class="p-4 rounded-sm bg-surface-2 border border-line space-y-2">
               <div class="flex items-center justify-between">
                 <div>
-                  <div class="font-bold text-xs text-on-surface">{{ prov.name }}</div>
-                  <div class="text-[10px] text-outline">{{ prov.agreement }}</div>
+                  <div class="font-bold text-xs text-ink font-mono">{{ prov.name }}</div>
+                  <div class="text-[10px] text-ink-soft">{{ prov.agreement }}</div>
                 </div>
-                <span class="font-mono text-xs font-semibold text-emerald-700">P95: {{ prov.latencyP95 }}</span>
+                <app-arcade-badge tone="cyan" appearance="outline" size="sm">P95: {{ prov.latencyP95 }}</app-arcade-badge>
               </div>
 
               <div class="space-y-1">
-                <div class="flex justify-between text-[10px] font-mono">
-                  <span class="text-outline">Cuota Mensual</span>
-                  <span [class.text-amber-700]="prov.quotaAlert" [class.font-bold]="prov.quotaAlert">
+                <div class="flex justify-between text-[10px]">
+                  <span class="text-ink-soft">Cuota Mensual</span>
+                  <span [class.text-gold]="prov.quotaAlert" [class.font-bold]="prov.quotaAlert" [class.text-ink]="!prov.quotaAlert">
                     {{ prov.quotaTokens }} ({{ prov.quotaPercent }}%)
                   </span>
                 </div>
-                <div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                <div class="w-full bg-surface h-1.5 rounded-xs overflow-hidden border border-line/60">
                   <div
-                    class="h-full rounded-full transition-all"
+                    class="h-full transition-all"
                     [style.width.%]="prov.quotaPercent"
-                    [class.bg-primary]="!prov.quotaAlert"
-                    [class.bg-amber-500]="prov.quotaAlert"
+                    [class.bg-brand]="!prov.quotaAlert"
+                    [class.bg-gold]="prov.quotaAlert"
                   ></div>
                 </div>
               </div>
 
-              <div class="pt-1 flex items-center justify-between text-[10px] font-mono text-outline">
-                <span class="truncate max-w-[280px]">{{ prov.endpoint }}</span>
-                <span class="text-emerald-700 font-semibold flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Conectado
+              <div class="pt-1 flex items-center justify-between text-[10px] text-ink-soft">
+                <span class="truncate max-w-[240px] sm:max-w-[280px]">{{ prov.endpoint }}</span>
+                <span class="text-green-400 font-bold flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span> Conectado
                 </span>
               </div>
             </div>
@@ -89,35 +87,33 @@
       </div>
     </div>
 
-    <!-- Columna 2: Mapeo Modelo ↔ Función (Políticas RF-IA-23 / RF-IA-25) -->
-    <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+    <!-- Columna 2: Mapeo Modelo ↔ Función (Políticas RF-IA-23 / RF-IA-25) Arcade -->
+    <div class="arcade-card arcade-corners p-5 sm:p-6 flex flex-col justify-between">
       <div>
-        <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest mb-4">
+        <div class="flex items-center justify-between pb-3 border-b border-line mb-4">
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-secondary text-[22px]">assignment_ind</span>
-            <h2 class="text-base font-bold text-on-surface">Asignación Modelo ↔ Función</h2>
+            <h2 class="text-base font-bold text-ink font-mono">Asignación Modelo ↔ Función</h2>
           </div>
-          <span class="text-xs font-mono font-semibold px-2.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed">
-            RF-IA-23 / 25
-          </span>
+          <app-arcade-badge tone="cyan" appearance="solid" size="sm">RF-IA-23 / 25</app-arcade-badge>
         </div>
-        <p class="text-xs text-on-surface-variant mb-4">Políticas de asignación institucional. La evaluación académica exige evaluador único inmutable:</p>
+        <p class="text-xs text-ink-soft font-mono mb-4">Políticas de asignación institucional. La evaluación académica exige evaluador único inmutable:</p>
 
-        <div class="space-y-3">
+        <div class="space-y-3 font-mono">
           @for (role of roleMappings(); track role.roleName) {
             <div
-              class="p-4 rounded-xl border space-y-2"
-              [class.bg-primary/5]="role.isLocked"
-              [class.border-primary/30]="role.isLocked"
-              [class.bg-surface-container-low]="!role.isLocked"
-              [class.border-outline-variant/20]="!role.isLocked"
+              class="p-4 rounded-sm border space-y-2"
+              [class.bg-brand/10]="role.isLocked"
+              [class.border-brand]="role.isLocked"
+              [class.bg-surface-2]="!role.isLocked"
+              [class.border-line]="!role.isLocked"
             >
               <div class="flex items-center justify-between">
-                <span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded" [class.bg-primary]="role.isLocked" [class.text-white]="role.isLocked" [class.bg-surface-container-high]="!role.isLocked" [class.text-primary]="!role.isLocked">
+                <app-arcade-badge [tone]="role.isLocked ? 'magenta' : 'neutral'" appearance="outline" size="sm">
                   {{ role.badge }}
-                </span>
+                </app-arcade-badge>
                 @if (role.isLocked) {
-                  <span class="flex items-center gap-1 text-[10px] font-mono text-primary font-bold">
+                  <span class="flex items-center gap-1 text-[10px] font-mono text-brand font-bold">
                     <span class="material-symbols-outlined text-[14px]">lock</span>
                     Inmutable
                   </span>
@@ -125,12 +121,12 @@
               </div>
 
               <div>
-                <div class="text-xs font-bold text-on-surface">{{ role.roleName }}</div>
-                <div class="text-xs font-mono font-semibold text-primary mt-0.5">{{ role.assignedModel }}</div>
-                <div class="text-[10px] text-outline font-mono mt-0.5">{{ role.modelId }}</div>
+                <div class="text-xs font-bold text-ink">{{ role.roleName }}</div>
+                <div class="text-xs font-bold text-brand mt-0.5">{{ role.assignedModel }}</div>
+                <div class="text-[10px] text-ink-soft mt-0.5">{{ role.modelId }}</div>
               </div>
 
-              <div class="text-[11px] text-on-surface-variant italic leading-relaxed pt-1 border-t border-surface-container-highest">
+              <div class="text-[11px] text-ink-soft italic leading-relaxed pt-1 border-t border-line">
                 "{{ role.purpose }}"
               </div>
             </div>
@@ -140,22 +136,22 @@
     </div>
   </div>
 
-  <!-- Sección Inferior: Calibración Obligatoria sobre Golden Set Base (RF-IA-31 • PAR-14) -->
-  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm p-6 space-y-6">
-    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-surface-container-highest">
+  <!-- Sección Inferior: Calibración Obligatoria sobre Golden Set Base (RF-IA-31 • PAR-14) Arcade -->
+  <div class="arcade-card arcade-corners p-5 sm:p-6 space-y-6">
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-line">
       <div>
         <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary text-[22px]">tune</span>
-          <h2 class="text-base font-bold text-on-surface">Calibración sobre Golden Set Base (RF-IA-31 • PAR-14)</h2>
+          <span class="material-symbols-outlined text-brand text-[22px]">tune</span>
+          <h2 class="text-base font-bold text-ink font-mono">Calibración sobre Golden Set Base (RF-IA-31 • PAR-14)</h2>
         </div>
-        <p class="text-xs text-on-surface-variant mt-0.5">
+        <p class="text-xs text-ink-soft font-mono mt-0.5">
           Corpus canónico de 50 transcripciones de alumnos puntuadas por el claustro docente. Desvío tolerado: Avg ≤ ±5.0 pts / Max ≤ ±10.0 pts.
         </p>
       </div>
 
       <button
         (click)="openCalibrationModal()"
-        class="bg-primary hover:bg-primary-container text-white text-xs font-semibold px-5 py-2.5 rounded-xl flex items-center gap-2 transition-all shadow-sm"
+        class="btn-arcade-pipos btn-arcade-cyan px-4 py-2 flex items-center gap-2 text-xs font-mono"
       >
         <span class="material-symbols-outlined text-[16px]">rocket_launch</span>
         <span>Iniciar Calibración sobre 50 Transcripciones</span>
@@ -164,76 +160,71 @@
 
     <!-- 4 Cards de Estado PAR-14 -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
-        <span class="text-[10px] uppercase text-outline font-semibold">Modelo Primario Homologado</span>
-        <div class="text-base font-bold text-on-surface mt-1">Claude 3.5 Sonnet</div>
-        <span class="text-[10px] text-emerald-700 font-semibold font-mono">Habilitado para Cursada</span>
+      <div class="arcade-card p-4 space-y-1">
+        <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">Modelo Homologado</span>
+        <div class="text-sm font-bold text-ink font-mono">Claude 3.5 Sonnet</div>
+        <span class="text-[10px] text-green-400 font-mono font-bold block">Habilitado Cursada</span>
       </div>
 
-      <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
-        <span class="text-[10px] uppercase text-outline font-semibold">Desvío Promedio Vigente</span>
-        <div class="text-base font-bold text-emerald-700 font-mono mt-1">+2.4 pts</div>
-        <span class="text-[10px] text-outline font-mono">Tolerancia PAR-14: ±5.0 pts</span>
+      <div class="arcade-card p-4 space-y-1">
+        <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">Desvío Promedio</span>
+        <div class="text-sm font-bold text-green-400 font-retro">+2.4 pts</div>
+        <span class="text-[10px] text-ink-soft font-mono block">PAR-14: ±5.0 pts</span>
       </div>
 
-      <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
-        <span class="text-[10px] uppercase text-outline font-semibold">Frecuencia de Auditoría</span>
-        <div class="text-base font-bold text-on-surface mt-1">Mensual (PAR-15)</div>
-        <span class="text-[10px] text-outline">Re-evaluación periódica</span>
+      <div class="arcade-card p-4 space-y-1">
+        <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">Frecuencia Auditoría</span>
+        <div class="text-sm font-bold text-ink font-mono">Mensual (PAR-15)</div>
+        <span class="text-[10px] text-ink-soft font-mono block">Re-evaluación periódica</span>
       </div>
 
-      <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
-        <span class="text-[10px] uppercase text-outline font-semibold">Modelos No Homologados</span>
-        <div class="text-base font-bold text-rose-600 font-mono mt-1">1 Bloqueado</div>
-        <span class="text-[10px] text-rose-600 font-mono">Desvío &gt; ±5.0 pts</span>
+      <div class="arcade-card p-4 space-y-1">
+        <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">No Homologados</span>
+        <div class="text-sm font-bold text-danger font-retro">1 Bloqueado</div>
+        <span class="text-[10px] text-danger font-mono block">Desvío &gt; ±5.0 pts</span>
       </div>
     </div>
 
     <!-- Tabla Histórica de Corridas PAR-14 -->
     <div class="overflow-x-auto">
-      <table class="w-full text-left text-xs">
-        <thead class="bg-surface-container-low text-on-surface-variant font-semibold border-b border-surface-container-highest">
+      <table class="w-full text-left text-xs font-mono">
+        <thead class="bg-surface-2 text-ink-soft font-bold uppercase tracking-wider text-[11px] border-b-2 border-line">
           <tr>
             <th class="py-3.5 px-4">Run ID</th>
             <th class="py-3.5 px-4">Fecha / Hora</th>
             <th class="py-3.5 px-4">Modelo Evaluado</th>
-            <th class="py-3.5 px-4">Dimensiones Ponderadas (Aut / Clar / Prog / AntiJail / Efic)</th>
+            <th class="py-3.5 px-4">Dimensiones (Aut / Clar / Prog / AntiJail / Efic)</th>
             <th class="py-3.5 px-4 text-center">Desvío Promedio</th>
             <th class="py-3.5 px-4 text-right">Dictamen / Estado</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-surface-container-highest font-mono">
+        <tbody class="divide-y divide-line">
           @for (run of goldenRuns(); track run.runId) {
-            <tr class="hover:bg-surface-container-low transition-colors">
-              <td class="py-3.5 px-4 font-bold text-primary">{{ run.runId }}</td>
-              <td class="py-3.5 px-4 text-on-surface-variant font-sans">{{ run.timestamp }}</td>
-              <td class="py-3.5 px-4 font-bold text-on-surface font-sans">{{ run.modelEvaluated }}</td>
+            <tr class="hover:bg-surface-2/60 transition-colors">
+              <td class="py-3.5 px-4 font-retro text-xs text-brand">{{ run.runId }}</td>
+              <td class="py-3.5 px-4 text-ink-soft">{{ run.timestamp }}</td>
+              <td class="py-3.5 px-4 font-bold text-ink">{{ run.modelEvaluated }}</td>
               <!-- Pills de 5 dimensiones -->
-              <td class="py-3.5 px-4 font-sans">
+              <td class="py-3.5 px-4">
                 <div class="flex items-center gap-1.5 text-[10px] font-mono">
-                  <span class="px-1.5 py-0.5 rounded bg-surface-container-high" title="Autonomía (30%)">{{ run.autonomyScore }}</span>
-                  <span class="px-1.5 py-0.5 rounded bg-surface-container-high" title="Claridad (25%)">{{ run.clarityScore }}</span>
-                  <span class="px-1.5 py-0.5 rounded bg-surface-container-high" title="Progresión (20%)">{{ run.progressionScore }}</span>
-                  <span class="px-1.5 py-0.5 rounded bg-surface-container-high" title="Anti-Jailbreak (15%)">{{ run.antiJailbreakScore }}</span>
-                  <span class="px-1.5 py-0.5 rounded bg-surface-container-high" title="Eficiencia (10%)">{{ run.efficiencyScore }}</span>
+                  <span class="px-1.5 py-0.5 rounded-xs bg-surface-2 border border-line" title="Autonomía (30%)">{{ run.autonomyScore }}</span>
+                  <span class="px-1.5 py-0.5 rounded-xs bg-surface-2 border border-line" title="Claridad (25%)">{{ run.clarityScore }}</span>
+                  <span class="px-1.5 py-0.5 rounded-xs bg-surface-2 border border-line" title="Progresión (20%)">{{ run.progressionScore }}</span>
+                  <span class="px-1.5 py-0.5 rounded-xs bg-surface-2 border border-line" title="Anti-Jailbreak (15%)">{{ run.antiJailbreakScore }}</span>
+                  <span class="px-1.5 py-0.5 rounded-xs bg-surface-2 border border-line" title="Eficiencia (10%)">{{ run.efficiencyScore }}</span>
                 </div>
               </td>
-              <td class="py-3.5 px-4 text-center font-bold" [class.text-emerald-700]="run.isApproved" [class.text-rose-600]="!run.isApproved">
+              <td class="py-3.5 px-4 text-center font-bold font-retro text-xs" [class.text-green-400]="run.isApproved" [class.text-danger]="!run.isApproved">
                 {{ run.averageDeviation }}
               </td>
-              <td class="py-3.5 px-4 text-right font-sans">
-                <span
-                  class="px-2.5 py-1 rounded-full text-[10px] font-semibold font-mono inline-block"
-                  [class.bg-emerald-50]="run.isApproved"
-                  [class.text-emerald-800]="run.isApproved"
-                  [class.border]="run.isApproved"
-                  [class.border-emerald-300]="run.isApproved"
-                  [class.bg-rose-50]="!run.isApproved"
-                  [class.text-rose-800]="!run.isApproved"
-                  [class.border-rose-300]="!run.isApproved"
+              <td class="py-3.5 px-4 text-right">
+                <app-arcade-badge
+                  [tone]="run.isApproved ? 'green' : 'red'"
+                  appearance="outline"
+                  size="sm"
                 >
                   {{ run.verdict }}
-                </span>
+                </app-arcade-badge>
               </td>
             </tr>
           }
@@ -242,54 +233,54 @@
     </div>
 
     <!-- Pie de tabla: Integridad Hash sha256 -->
-    <div class="pt-3 border-t border-surface-container-highest flex flex-col sm:flex-row justify-between items-center text-[10px] text-outline font-mono gap-2">
+    <div class="pt-3 border-t border-line flex flex-col sm:flex-row justify-between items-center text-[10px] text-ink-soft font-mono gap-2">
       <span>Integridad SHA-256 Golden Set: 9f82d1a4e2358bc89421fbc9820014ef</span>
       <span>Homologación Resolución Decanal Nº 1422/25 FRC</span>
     </div>
   </div>
 
-  <!-- Modal Interactivo de Pipeline de Calibración por Fases -->
+  <!-- Modal Interactivo de Pipeline de Calibración Arcade -->
   @if (isModalOpen()) {
-    <div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 animate-fadeIn">
-      <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant max-w-lg w-full p-6 shadow-xl space-y-5">
-        <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest">
+    <div class="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 animate-fadeIn font-mono">
+      <div class="arcade-card arcade-corners max-w-lg w-full p-6 space-y-5 bg-surface border-2 border-line shadow-2xl">
+        <div class="flex items-center justify-between pb-3 border-b border-line">
           <div>
-            <h3 class="text-base font-bold text-on-surface">Pipeline de Calibración PAR-14</h3>
-            <p class="text-xs text-on-surface-variant">Evaluación obligatoria sobre las 50 transcripciones de control</p>
+            <h3 class="text-base font-bold text-ink">Pipeline de Calibración PAR-14</h3>
+            <p class="text-xs text-ink-soft">Evaluación obligatoria sobre las 50 transcripciones de control</p>
           </div>
-          <button (click)="closeCalibrationModal()" class="text-outline hover:text-on-surface p-1 rounded-lg">
+          <button (click)="closeCalibrationModal()" class="text-ink-soft hover:text-ink p-1 rounded-sm">
             <span class="material-symbols-outlined text-[20px]">close</span>
           </button>
         </div>
 
         <div class="space-y-4 text-xs">
           <div>
-            <label class="block font-semibold text-outline uppercase tracking-wider mb-1">Modelo Seleccionado para Evaluación</label>
-            <div class="p-3 bg-surface-container-high rounded-xl text-on-surface font-mono font-bold">
+            <label class="block font-bold text-ink-soft uppercase tracking-wider mb-1 text-[10px]">Modelo Seleccionado para Evaluación</label>
+            <div class="p-3 bg-surface-2 border border-line rounded-sm text-ink font-bold">
               {{ selectedModelForCalibration() }} (anthropic.claude-3-5-sonnet-20241022-v2:0)
             </div>
           </div>
 
-          <div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-1">
-            <div class="flex justify-between font-mono text-[11px]">
-              <span class="text-outline">Corpus Canónico:</span>
-              <span class="font-bold text-on-surface">50 Transcripciones</span>
+          <div class="p-3 rounded-sm bg-surface-2 border border-line space-y-1">
+            <div class="flex justify-between text-[11px]">
+              <span class="text-ink-soft">Corpus Canónico:</span>
+              <span class="font-bold text-ink">50 Transcripciones</span>
             </div>
-            <div class="flex justify-between font-mono text-[11px]">
-              <span class="text-outline">Tolerancia Máxima:</span>
-              <span class="font-bold text-emerald-700">Avg ≤ ±5.0 pts</span>
+            <div class="flex justify-between text-[11px]">
+              <span class="text-ink-soft">Tolerancia Máxima:</span>
+              <span class="font-bold text-green-400">Avg ≤ ±5.0 pts</span>
             </div>
-            <div class="flex justify-between font-mono text-[11px]">
-              <span class="text-outline">Costo Estimado Inferencia:</span>
-              <span class="font-bold text-on-surface">$0.42 USD</span>
+            <div class="flex justify-between text-[11px]">
+              <span class="text-ink-soft">Costo Estimado Inferencia:</span>
+              <span class="font-bold text-ink">$0.42 USD</span>
             </div>
           </div>
 
           <!-- Barra de Progreso por Fases -->
           @if (calibrationStep() > 0) {
             <div class="space-y-2 pt-2">
-              <div class="flex justify-between text-xs font-semibold">
-                <span class="text-primary">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-brand">
                   @switch (calibrationStep()) {
                     @case (1) { Fase 1/5: Cargando Golden Set #84920 (50 rúbricas)... }
                     @case (2) { Fase 2/5: Evaluando inferencias de Autonomía y Claridad... }
@@ -298,11 +289,11 @@
                     @case (5) { Fase 5/5: Calibración finalizada exitosamente. }
                   }
                 </span>
-                <span class="font-mono text-outline">{{ calibrationStep() * 20 }}%</span>
+                <span class="text-ink-soft">{{ calibrationStep() * 20 }}%</span>
               </div>
-              <div class="w-full bg-surface-container-high h-2.5 rounded-full overflow-hidden">
+              <div class="w-full bg-surface h-2.5 rounded-xs overflow-hidden border border-line">
                 <div
-                  class="h-full bg-primary rounded-full transition-all duration-500"
+                  class="h-full bg-brand transition-all duration-500"
                   [style.width.%]="calibrationStep() * 20"
                 ></div>
               </div>
@@ -310,17 +301,17 @@
           }
         </div>
 
-        <div class="flex items-center justify-end gap-3 pt-3 border-t border-surface-container-highest">
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-line">
           <button
             (click)="closeCalibrationModal()"
-            class="px-4 py-2 rounded-xl text-xs font-semibold text-on-surface-variant hover:bg-surface-container transition-colors"
+            class="btn-arcade-pipos btn-arcade-neutral px-4 py-2 text-xs font-mono"
           >
             Cerrar
           </button>
           @if (calibrationStep() === 0) {
             <button
               (click)="startCalibrationPipeline()"
-              class="bg-primary hover:bg-primary-container text-white text-xs font-semibold px-5 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm"
+              class="btn-arcade-pipos btn-arcade-cyan px-4 py-2 text-xs font-mono flex items-center gap-2"
             >
               <span class="material-symbols-outlined text-[16px]">play_arrow</span>
               <span>Ejecutar Calibración</span>

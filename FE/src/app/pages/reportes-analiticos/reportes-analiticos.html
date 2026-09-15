@@ -1,91 +1,91 @@
-<div class="p-8 space-y-8 max-w-7xl mx-auto">
+<div class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto">
   <!-- Cabecera -->
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+  <div class="arcade-card arcade-corners p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
     <div>
-      <div class="flex items-center gap-2 mb-1">
-        <span class="text-xs font-mono px-2 py-0.5 rounded bg-secondary/15 text-secondary font-semibold">MOD-05</span>
-        <span class="text-xs text-outline">•</span>
-        <span class="text-xs text-outline font-semibold text-primary">Tema 12 • FRC Core</span>
+      <div class="flex items-center gap-2 mb-1.5">
+        <app-arcade-badge tone="yellow" appearance="solid" size="sm">MOD-05</app-arcade-badge>
+        <span class="text-ink-soft">•</span>
+        <span class="text-xs font-mono font-bold text-brand uppercase">Tema 12 • FRC Core</span>
       </div>
-      <h1 class="text-2xl font-bold text-on-surface tracking-tight">Reportes Analíticos Académicos</h1>
-      <p class="text-sm text-on-surface-variant mt-0.5">Agregación multidimensional de retención, distribución de XP y efectividad en desafíos.</p>
+      <h1 class="text-2xl sm:text-3xl font-black text-ink tracking-tight">Reportes Analíticos Académicos</h1>
+      <p class="text-xs sm:text-sm text-ink-soft mt-0.5 font-medium">Agregación multidimensional de retención, distribución de XP y efectividad en desafíos.</p>
     </div>
 
-    <div class="flex items-center gap-3">
+    <div class="flex flex-wrap items-center gap-3">
       <button
         (click)="exportCSV()"
-        class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-colors border border-outline-variant/30"
+        class="btn-arcade-pipos btn-arcade-neutral px-3.5 py-2 flex items-center gap-1.5"
       >
-        <span class="material-symbols-outlined text-[16px]">file_download</span>
+        <span class="material-symbols-outlined text-[15px]">file_download</span>
         <span>Exportar CSV</span>
       </button>
       <button
         (click)="generatePDF()"
-        class="bg-primary hover:bg-primary-container text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm"
+        class="btn-arcade-pipos btn-arcade-magenta px-4 py-2 flex items-center gap-1.5"
       >
-        <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
-        <span>Generar PDF Institucional</span>
+        <span class="material-symbols-outlined text-[15px]">picture_as_pdf</span>
+        <span>Generar PDF</span>
       </button>
     </div>
   </div>
 
   @if (feedback()) {
-    <div class="bg-primary-fixed/30 border border-primary/20 text-on-primary-fixed px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
-      <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+    <div class="arcade-card p-3.5 border-brand/60 bg-brand/10 text-brand rounded-sm flex items-center gap-2.5 text-xs font-bold animate-fadeIn">
+      <span class="material-symbols-outlined text-brand text-[18px]">verified</span>
       <span>{{ feedback() }}</span>
     </div>
   }
 
   <!-- Barra de Filtros Multidimensionales (4 columnas) -->
-  <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+  <div class="arcade-card arcade-corners p-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end font-mono">
       <div>
-        <label class="block text-xs font-semibold text-outline uppercase tracking-wider mb-1.5">Departamento</label>
+        <label class="block text-[9px] font-retro text-ink-soft uppercase tracking-wider mb-1.5">Departamento</label>
         <select
           [value]="selectedDept()"
           (change)="onSelectDept($event)"
-          class="w-full bg-surface-container-high rounded-xl text-xs px-3 py-2.5 text-on-surface border-none focus:ring-2 focus:ring-primary font-medium"
+          class="w-full bg-surface-2 border-2 border-line rounded-sm text-xs px-3 py-2.5 text-ink focus:outline-none focus:border-brand font-mono font-medium"
         >
-          <option value="Sistemas">Departamento de Sistemas</option>
-          <option value="Electrónica">Departamento de Electrónica</option>
-          <option value="Industrial">Departamento de Industrial</option>
-          <option value="Mecánica">Departamento de Mecánica</option>
+          <option value="Sistemas">Dpto. Sistemas</option>
+          <option value="Electrónica">Dpto. Electrónica</option>
+          <option value="Industrial">Dpto. Industrial</option>
+          <option value="Mecánica">Dpto. Mecánica</option>
         </select>
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-outline uppercase tracking-wider mb-1.5">Carrera</label>
+        <label class="block text-[9px] font-retro text-ink-soft uppercase tracking-wider mb-1.5">Carrera</label>
         <select
           [value]="selectedCarrera()"
           (change)="onSelectCarrera($event)"
-          class="w-full bg-surface-container-high rounded-xl text-xs px-3 py-2.5 text-on-surface border-none focus:ring-2 focus:ring-primary font-medium"
+          class="w-full bg-surface-2 border-2 border-line rounded-sm text-xs px-3 py-2.5 text-ink focus:outline-none focus:border-brand font-mono font-medium"
         >
-          <option value="Ingeniería en Sistemas de Información">Ingeniería en Sistemas de Información</option>
-          <option value="Ingeniería Electrónica">Ingeniería Electrónica</option>
-          <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+          <option value="Ingeniería en Sistemas de Información">Ing. en Sistemas</option>
+          <option value="Ingeniería Electrónica">Ing. Electrónica</option>
+          <option value="Ingeniería Industrial">Ing. Industrial</option>
         </select>
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-outline uppercase tracking-wider mb-1.5">Cohorte / Año</label>
+        <label class="block text-[9px] font-retro text-ink-soft uppercase tracking-wider mb-1.5">Cohorte / Año</label>
         <select
           [value]="selectedCohorte()"
           (change)="onSelectCohorte($event)"
-          class="w-full bg-surface-container-high rounded-xl text-xs px-3 py-2.5 text-on-surface border-none focus:ring-2 focus:ring-primary font-medium"
+          class="w-full bg-surface-2 border-2 border-line rounded-sm text-xs px-3 py-2.5 text-ink focus:outline-none focus:border-brand font-mono font-medium"
         >
           <option value="Cohorte 2026 (Ingreso)">Cohorte 2026 (Ingreso)</option>
           <option value="Cohorte 2025">Cohorte 2025</option>
           <option value="Cohorte 2024">Cohorte 2024</option>
-          <option value="Todas las Cohortes">Todas las Cohortes Activas</option>
+          <option value="Todas las Cohortes">Todas las Cohortes</option>
         </select>
       </div>
 
       <div>
         <button
           (click)="applyFilters()"
-          class="w-full bg-surface-container-high hover:bg-surface-container-highest text-primary text-xs font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors border border-primary/20"
+          class="btn-arcade-pipos btn-arcade-cyan w-full py-2.5 flex items-center justify-center gap-1.5"
         >
-          <span class="material-symbols-outlined text-[16px]">filter_alt</span>
+          <span class="material-symbols-outlined text-[15px]">filter_alt</span>
           <span>Aplicar Filtros</span>
         </button>
       </div>
@@ -93,17 +93,17 @@
   </div>
 
   <!-- 4 KPIs Resumen -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
     @for (k of kpis(); track k.title) {
-      <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between hover:border-primary/40 transition-all">
+      <div class="arcade-card arcade-corners p-5 hover:border-brand transition-all flex flex-col justify-between">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-xs uppercase font-semibold text-outline tracking-wider">{{ k.title }}</span>
-          <span class="p-2 rounded-xl bg-surface-container-high text-primary material-symbols-outlined text-[20px]">{{ k.icon }}</span>
+          <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">{{ k.title }}</span>
+          <span class="w-8 h-8 rounded-sm bg-surface-2 border border-line flex items-center justify-center text-gold material-symbols-outlined text-[18px]">{{ k.icon }}</span>
         </div>
         <div>
-          <div class="text-2xl font-bold text-on-surface font-mono tracking-tight">{{ k.value }}</div>
-          <div class="text-[11px] text-emerald-700 font-semibold mt-1">{{ k.delta }}</div>
-          <div class="text-[10px] text-outline mt-1">{{ k.desc }}</div>
+          <div class="text-2xl sm:text-3xl font-bold text-ink font-retro tracking-tight">{{ k.value }}</div>
+          <div class="text-[10px] text-success font-retro mt-1.5">{{ k.delta }}</div>
+          <div class="text-[10px] text-ink-soft mt-1 font-sans font-medium">{{ k.desc }}</div>
         </div>
       </div>
     }
@@ -112,64 +112,64 @@
   <!-- Bento Grid: Distribución XP por Niveles (2 cols) + Retención vs Desafíos (1 col) -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- Gráfico 1 (2 cols): Distribución de XP por Niveles Gamificados -->
-    <div class="lg:col-span-2 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
-      <div class="flex justify-between items-center mb-6">
+    <div class="lg:col-span-2 arcade-card arcade-corners p-6 flex flex-col justify-between">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
         <div>
-          <h2 class="text-base font-bold text-on-surface">Distribución de XP por Niveles Gamificados</h2>
-          <p class="text-xs text-on-surface-variant">Estudiantes agrupados según la curva de progreso de 10 niveles (PAR-09)</p>
+          <h2 class="text-base font-black text-ink">Distribución de XP por Niveles Gamificados</h2>
+          <p class="text-xs text-ink-soft font-medium mt-0.5">Estudiantes agrupados según la curva de progreso de 10 niveles (PAR-09)</p>
         </div>
-        <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed">
-          1,640 Estudiantes Mapeados
-        </span>
+        <app-arcade-badge tone="cyan" appearance="solid" size="sm">
+          1,640 ESTUDIANTES
+        </app-arcade-badge>
       </div>
 
       <!-- Barras de Niveles -->
-      <div class="h-56 flex items-end justify-between gap-4 pt-6 pb-2 px-4 border-b border-surface-container-highest">
+      <div class="h-56 flex items-end justify-between gap-4 pt-6 pb-2 px-4 border-b-2 border-line">
         @for (item of xpDistribution(); track item.level) {
           <div class="flex-1 flex flex-col items-center gap-2 group relative">
-            <div class="absolute -top-9 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded shadow pointer-events-none whitespace-nowrap z-10 font-mono">
+            <div class="absolute -top-9 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-2 border border-line text-ink text-[9px] px-2 py-1 rounded-sm shadow pointer-events-none whitespace-nowrap z-10 font-mono">
               {{ item.students }} alumnos • {{ item.range }}
             </div>
-            <div class="w-full max-w-[48px] bg-surface-container-high rounded-t-md relative overflow-hidden flex items-end h-44">
+            <div class="w-full max-w-[48px] bg-surface-2 border border-line rounded-t-sm relative overflow-hidden flex items-end h-44">
               <div
-                class="w-full bg-primary rounded-t-md transition-all duration-500 hover:bg-primary-container"
+                class="w-full bg-brand rounded-t-sm transition-all duration-500 hover:bg-brand-2"
                 [style.height.%]="item.heightPercent"
               ></div>
             </div>
-            <span class="text-xs font-semibold text-on-surface">{{ item.level }}</span>
-            <span class="text-[10px] text-outline font-mono">{{ item.students }}</span>
+            <span class="text-xs font-bold font-retro text-ink">{{ item.level }}</span>
+            <span class="text-[9px] text-ink-soft font-mono">{{ item.students }}</span>
           </div>
         }
       </div>
 
-      <div class="flex items-center justify-between mt-4 text-xs text-on-surface-variant">
+      <div class="flex items-center justify-between mt-4 text-xs text-ink-soft font-mono">
         <span>Rango: Nivel 1 (0 XP) a Nivel 5 (12,000+ XP)</span>
-        <span class="font-semibold text-primary">Concentración modal en Nivel 3 (5k - 10k XP)</span>
+        <span class="font-bold text-brand">Moda: Nivel 3 (5k - 10k XP)</span>
       </div>
     </div>
 
     <!-- Gráfico 2 (1 col): Retención vs Desafíos (Donut visual) -->
-    <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+    <div class="arcade-card arcade-corners p-6 flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-base font-bold text-on-surface">Retención vs. Desafíos</h2>
-          <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800">88.3%</span>
+          <h2 class="text-base font-black text-ink">Retención vs. Desafíos</h2>
+          <app-arcade-badge tone="green" appearance="solid" size="sm">88.3%</app-arcade-badge>
         </div>
-        <p class="text-xs text-on-surface-variant mb-6">Impacto directo de la entrega continua de desafíos sobre la persistencia académica</p>
+        <p class="text-xs text-ink-soft mb-6 font-medium">Impacto directo de la entrega continua de desafíos sobre la persistencia académica</p>
 
         <!-- Donut SVG circular representativo -->
         <div class="flex items-center justify-center my-4">
           <div class="relative w-40 h-40 flex items-center justify-center">
             <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
               <path
-                class="text-surface-container-high"
+                class="text-surface-2"
                 stroke-width="3.5"
                 stroke="currentColor"
                 fill="none"
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
               />
               <path
-                class="text-primary"
+                class="text-brand"
                 stroke-dasharray="88.3, 100"
                 stroke-width="3.5"
                 stroke-linecap="round"
@@ -179,20 +179,20 @@
               />
             </svg>
             <div class="absolute flex flex-col items-center justify-center">
-              <span class="text-2xl font-bold font-mono text-on-surface">88.3%</span>
-              <span class="text-[10px] text-outline uppercase font-semibold">Retención</span>
+              <span class="text-2xl font-bold font-retro text-ink">88.3%</span>
+              <span class="text-[9px] text-ink-soft uppercase font-retro mt-1">Retención</span>
             </div>
           </div>
         </div>
 
-        <div class="space-y-2 mt-6 text-xs">
-          <div class="flex justify-between items-center p-2 rounded-lg bg-surface-container-low">
-            <span class="text-on-surface-variant">&gt; 80% desafíos entregados:</span>
-            <span class="font-mono font-bold text-emerald-700">94.5% retención</span>
+        <div class="space-y-2 mt-6 text-xs font-mono">
+          <div class="flex justify-between items-center p-2 rounded-sm bg-surface-2 border border-line">
+            <span class="text-ink-soft">&gt; 80% desafíos entregados:</span>
+            <span class="font-bold text-success">94.5% retención</span>
           </div>
-          <div class="flex justify-between items-center p-2 rounded-lg bg-surface-container-low">
-            <span class="text-on-surface-variant">&lt; 50% desafíos entregados:</span>
-            <span class="font-mono font-bold text-rose-600">62.1% retención</span>
+          <div class="flex justify-between items-center p-2 rounded-sm bg-surface-2 border border-line">
+            <span class="text-ink-soft">&lt; 50% desafíos entregados:</span>
+            <span class="font-bold text-danger">62.1% retención</span>
           </div>
         </div>
       </div>
@@ -200,59 +200,57 @@
   </div>
 
   <!-- Tabla Detallada de Rendimiento por Asignatura / Cátedra PAR -->
-  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden">
-    <div class="p-6 border-b border-surface-container-highest flex justify-between items-center">
+  <div class="arcade-card arcade-corners overflow-hidden">
+    <div class="p-6 border-b-2 border-line bg-surface-2/40 flex justify-between items-center">
       <div>
-        <h2 class="text-base font-bold text-on-surface">Desglose de Rendimiento por Asignatura</h2>
-        <p class="text-xs text-on-surface-variant">Métricas consolidadas de aprobación y efectividad técnica (sin rankings docentes individuales • RF-RPT-07).</p>
+        <h2 class="text-base font-black text-ink">Desglose de Rendimiento por Asignatura</h2>
+        <p class="text-xs text-ink-soft mt-0.5 font-medium">Métricas consolidadas de aprobación y efectividad técnica (sin rankings docentes individuales • RF-RPT-07).</p>
       </div>
     </div>
 
     <div class="overflow-x-auto">
-      <table class="w-full text-left text-xs">
-        <thead class="bg-surface-container-low text-on-surface-variant font-semibold border-b border-surface-container-highest">
+      <table class="w-full text-left text-xs border-collapse">
+        <thead class="bg-surface-2 text-ink font-retro text-[9px] border-b-2 border-line uppercase">
           <tr>
-            <th class="py-3.5 px-4">Código PAR</th>
-            <th class="py-3.5 px-4">Asignatura / Comisión</th>
-            <th class="py-3.5 px-4 text-center">Inscriptos</th>
-            <th class="py-3.5 px-4">XP Promedio</th>
-            <th class="py-3.5 px-4">Efectividad Prácticos</th>
-            <th class="py-3.5 px-4 text-right">Estado</th>
+            <th class="py-3 px-4">Código PAR</th>
+            <th class="py-3 px-4">Asignatura / Comisión</th>
+            <th class="py-3 px-4 text-center">Inscriptos</th>
+            <th class="py-3 px-4">XP Promedio</th>
+            <th class="py-3 px-4">Efectividad Prácticos</th>
+            <th class="py-3 px-4 text-right">Estado</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-surface-container-highest">
+        <tbody class="divide-y divide-line font-mono">
           @for (c of catedrasPerformance(); track c.parCode) {
-            <tr class="hover:bg-surface-container-low transition-colors">
-              <td class="py-3.5 px-4 font-mono font-bold text-primary">{{ c.parCode }}</td>
-              <td class="py-3.5 px-4 font-medium text-on-surface">{{ c.subject }}</td>
-              <td class="py-3.5 px-4 text-center font-mono font-semibold">{{ c.inscriptos }}</td>
-              <td class="py-3.5 px-4 font-mono font-bold text-on-surface">{{ c.xpAvg }} XP</td>
+            <tr class="hover:bg-surface-2/60 transition-colors">
+              <td class="py-3.5 px-4 font-bold text-brand">{{ c.parCode }}</td>
+              <td class="py-3.5 px-4 font-sans font-medium text-ink">{{ c.subject }}</td>
+              <td class="py-3.5 px-4 text-center font-bold text-ink">{{ c.inscriptos }}</td>
+              <td class="py-3.5 px-4 font-bold text-gold">{{ c.xpAvg }} XP</td>
               <!-- Barra de efectividad -->
               <td class="py-3.5 px-4">
                 <div class="w-36 space-y-1">
-                  <div class="flex justify-between text-[11px] font-mono">
-                    <span class="font-semibold text-on-surface">{{ c.passRate }}%</span>
+                  <div class="flex justify-between text-[11px]">
+                    <span class="font-bold text-ink">{{ c.passRate }}%</span>
                   </div>
-                  <div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                  <div class="w-full bg-surface-2 border border-line h-2 rounded-sm overflow-hidden">
                     <div
-                      class="h-full rounded-full"
+                      class="h-full rounded-sm"
                       [style.width.%]="c.passRate"
-                      [class.bg-emerald-500]="c.passRate >= 80"
-                      [class.bg-amber-500]="c.passRate < 80"
+                      [class.bg-success]="c.passRate >= 80"
+                      [class.bg-gold]="c.passRate < 80"
                     ></div>
                   </div>
                 </div>
               </td>
               <td class="py-3.5 px-4 text-right">
-                <span
-                  class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
-                  [class.bg-emerald-50]="c.status === 'Óptimo'"
-                  [class.text-emerald-700]="c.status === 'Óptimo'"
-                  [class.bg-amber-50]="c.status === 'En Seguimiento'"
-                  [class.text-amber-700]="c.status === 'En Seguimiento'"
+                <app-arcade-badge
+                  [tone]="c.status === 'Óptimo' ? 'green' : 'yellow'"
+                  appearance="solid"
+                  size="sm"
                 >
                   {{ c.status }}
-                </span>
+                </app-arcade-badge>
               </td>
             </tr>
           }

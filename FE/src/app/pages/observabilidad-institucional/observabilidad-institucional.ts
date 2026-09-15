@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ArcadeBadgeComponent } from '../../shared/arcade/arcade-badge/arcade-badge.component';
 
 export interface OfficialKpi {
   readonly code: string;
@@ -31,7 +32,7 @@ export interface SecurityIncident {
 
 @Component({
   selector: 'app-observabilidad-institucional',
-  imports: [],
+  imports: [ArcadeBadgeComponent],
   templateUrl: './observabilidad-institucional.html',
   styleUrl: './observabilidad-institucional.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -81,9 +82,29 @@ export class ObservabilidadInstitucional {
       title: 'Tasa Promoción Directa',
       value: '8.9%',
       delta: 'P90 Benchmark',
-      details: '126 Alumnos • Criterio: 0 vidas perdidas + 100% obligatorios',
+      details: '126 Alumnos • Criterio: P90 top 10% + 100% obligatorios',
       badge: 'Target ≥ 8%',
       tema: 'Tema 10 (Progreso & XP)',
+    },
+    {
+      code: 'KPI-06',
+      category: 'ENGAGEMENT',
+      title: 'Alumnos Activos Semanales',
+      value: '64.2%',
+      delta: '+4.2% vs target',
+      details: 'Sesión activa semanal / padrón activo • Telemetría continua',
+      badge: 'Target ≥ 60%',
+      tema: 'Tema 01 & Plataforma',
+    },
+    {
+      code: 'KPI-07',
+      category: 'RITMO ACADÉMICO',
+      title: 'Ritmo de Resolución',
+      value: '2.4 / sem',
+      delta: '+0.4 desafíos',
+      details: 'Desafíos superados por alumno activo por semana',
+      badge: 'Target ≥ 2 desafíos/sem',
+      tema: 'Tema 03 (Desafíos)',
     },
   ]);
 

@@ -1,78 +1,80 @@
-<div class="p-8 space-y-8 max-w-7xl mx-auto">
-  <!-- Cabecera -->
+<div class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto">
+  <!-- Cabecera Arcade -->
   <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
     <div>
-      <div class="flex items-center gap-2 mb-1">
-        <span class="text-xs font-mono px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">MOD-07</span>
-        <span class="text-xs text-outline">•</span>
-        <span class="text-xs text-outline font-semibold text-primary">Tema 12 • FRC Core</span>
+      <div class="flex items-center gap-2 mb-1.5">
+        <app-arcade-badge tone="cyan" appearance="solid" size="sm">MOD-07</app-arcade-badge>
+        <span class="text-ink-soft">•</span>
+        <span class="text-xs font-mono font-bold text-ink-soft uppercase tracking-wider">Tema 12 • FRC Core</span>
       </div>
-      <h1 class="text-2xl font-bold text-on-surface tracking-tight">Motor de Configuración Global</h1>
-      <p class="text-sm text-on-surface-variant mt-0.5">Consola operativa de sincronización en clúster y bitácora de auditoría inmutable (RF-AUD-02).</p>
+      <h1 class="text-2xl sm:text-3xl font-black text-ink tracking-tight">Motor de Configuración Global</h1>
+      <p class="text-xs sm:text-sm text-ink-soft mt-0.5 font-medium">Consola operativa de sincronización en clúster y bitácora de auditoría inmutable (RF-AUD-02).</p>
     </div>
 
     <div class="flex items-center gap-3">
       <button
         (click)="forceClusterSync()"
-        class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-colors border border-outline-variant/30"
+        class="btn-arcade-pipos btn-arcade-neutral px-4 py-2 flex items-center gap-2"
       >
         <span class="material-symbols-outlined text-[16px]">sync</span>
-        <span>Sincronizar Clúster</span>
+        <span class="font-mono text-xs">Sincronizar Clúster</span>
       </button>
       <button
         (click)="exportAudit()"
-        class="bg-primary hover:bg-primary-container text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm"
+        class="btn-arcade-pipos btn-arcade-cyan px-4 py-2 flex items-center gap-2"
       >
         <span class="material-symbols-outlined text-[16px]">file_download</span>
-        <span>Exportar AdminAuditLog</span>
+        <span class="font-mono text-xs">Exportar AdminAuditLog</span>
       </button>
     </div>
   </div>
 
   @if (feedback()) {
-    <div class="bg-primary-fixed/30 border border-primary/20 text-on-primary-fixed px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
-      <span class="material-symbols-outlined text-primary text-[18px]">info</span>
+    <div class="arcade-card p-3.5 border-brand/60 bg-brand/10 text-brand rounded-sm flex items-center gap-2.5 text-xs font-bold font-mono animate-fadeIn">
+      <span class="material-symbols-outlined text-brand text-[18px]">info</span>
       <span>{{ feedback() }}</span>
     </div>
   }
 
-  <!-- 4 Cards Superiores de Estado -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <!-- 4 Cards Superiores de Estado en Bento Grid Arcade -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
     @for (card of summaryCards(); track card.title) {
-      <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between hover:border-primary/40 transition-all">
+      <div class="arcade-card arcade-corners p-5 flex flex-col justify-between hover:border-brand transition-all">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-xs uppercase font-semibold text-outline tracking-wider">{{ card.title }}</span>
-          <span class="p-2 rounded-xl bg-surface-container-high text-primary material-symbols-outlined text-[20px]">{{ card.icon }}</span>
+          <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">{{ card.title }}</span>
+          <span class="w-8 h-8 rounded-sm bg-surface-2 border border-line flex items-center justify-center text-brand material-symbols-outlined text-[18px]">
+            {{ card.icon }}
+          </span>
         </div>
         <div>
-          <div class="text-2xl font-bold text-on-surface font-mono">{{ card.value }}</div>
-          <p class="text-xs text-outline mt-1 font-medium">{{ card.sub }}</p>
+          <div class="text-2xl sm:text-3xl font-bold text-ink font-retro">{{ card.value }}</div>
+          <p class="text-[11px] text-ink-soft mt-2 font-mono">{{ card.sub }}</p>
         </div>
       </div>
     }
   </div>
 
-  <!-- Contenedor Principal: Tabla de Parámetros Operativos -->
-  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden">
-    <div class="p-6 border-b border-surface-container-highest flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+  <!-- Contenedor Principal: Tabla de Parámetros Operativos Arcade -->
+  <div class="arcade-card arcade-corners p-0 overflow-hidden">
+    <div class="p-4 sm:p-6 border-b border-line flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 bg-surface-2/40">
       <div class="relative flex-1 max-w-md">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-soft text-[18px]">search</span>
         <input
           type="text"
           [value]="searchTerm()"
           (input)="onSearch($event)"
           placeholder="Buscar parámetro operativo, clave o autor..."
-          class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl text-xs text-on-surface placeholder:text-outline border-none focus:ring-2 focus:ring-primary"
+          class="w-full pl-10 pr-4 py-2 bg-surface-2 border border-line rounded-sm text-xs font-mono text-ink placeholder:text-ink-soft focus:outline-none focus:border-brand"
         />
       </div>
 
-      <div class="flex flex-wrap items-center gap-3">
+      <div class="flex flex-wrap items-center gap-3 font-mono text-xs">
         <div class="flex items-center gap-2">
-          <span class="text-xs text-outline font-medium">Categoría:</span>
+          <span class="text-ink-soft font-bold uppercase text-[10px]">Categoría:</span>
           <select
             [value]="selectedCategory()"
             (change)="onSelectCategory($event)"
-            class="bg-surface-container-high rounded-xl text-xs px-3 py-2 text-on-surface border-none focus:ring-2 focus:ring-primary font-medium"
+            class="bg-surface-2 border border-line rounded-sm text-xs px-3 py-1.5 text-ink focus:outline-none focus:border-brand font-mono"
           >
             <option value="Todas">Todas las Categorías</option>
             <option value="Economía">Economía</option>
@@ -83,11 +85,11 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <span class="text-xs text-outline font-medium">Estado:</span>
+          <span class="text-ink-soft font-bold uppercase text-[10px]">Estado:</span>
           <select
             [value]="selectedStatus()"
             (change)="onSelectStatus($event)"
-            class="bg-surface-container-high rounded-xl text-xs px-3 py-2 text-on-surface border-none focus:ring-2 focus:ring-primary font-medium"
+            class="bg-surface-2 border border-line rounded-sm text-xs px-3 py-1.5 text-ink focus:outline-none focus:border-brand font-mono"
           >
             <option value="Todos">Todos los Estados</option>
             <option value="Vigente">Vigente</option>
@@ -99,8 +101,8 @@
 
     <!-- Tabla -->
     <div class="overflow-x-auto">
-      <table class="w-full text-left text-xs">
-        <thead class="bg-surface-container-low text-on-surface-variant font-semibold border-b border-surface-container-highest">
+      <table class="w-full text-left text-xs font-mono">
+        <thead class="bg-surface-2 text-ink-soft font-bold uppercase tracking-wider text-[11px] border-b-2 border-line">
           <tr>
             <th class="py-3.5 px-4">Código PAR</th>
             <th class="py-3.5 px-4">Descripción / Clave</th>
@@ -112,34 +114,36 @@
             <th class="py-3.5 px-4 text-right">Última Sincro</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-surface-container-highest">
+        <tbody class="divide-y divide-line">
           @for (p of filteredParams(); track p.code) {
-            <tr class="hover:bg-surface-container-low transition-colors">
-              <td class="py-3.5 px-4 font-mono font-bold text-primary">{{ p.code }}</td>
-              <td class="py-3.5 px-4 font-medium text-on-surface">{{ p.name }}</td>
-              <td class="py-3.5 px-4 text-on-surface-variant">{{ p.category }}</td>
-              <td class="py-3.5 px-4 font-mono font-bold text-on-surface">{{ p.value }}</td>
-              <td class="py-3.5 px-4 text-[11px] text-outline font-mono">{{ p.type }}</td>
+            <tr class="hover:bg-surface-2/60 transition-colors">
+              <td class="py-3.5 px-4 font-retro text-xs text-brand">{{ p.code }}</td>
+              <td class="py-3.5 px-4 font-bold text-ink">{{ p.name }}</td>
+              <td class="py-3.5 px-4 text-ink-soft">{{ p.category }}</td>
+              <td class="py-3.5 px-4">
+                <span class="bg-surface-2 px-2 py-1 rounded-sm border border-line text-ink font-bold inline-block">
+                  {{ p.value }}
+                </span>
+              </td>
+              <td class="py-3.5 px-4 text-[11px] text-ink-soft font-mono">{{ p.type }}</td>
               <td class="py-3.5 px-4">
                 <div class="flex items-center gap-2">
-                  <div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">
+                  <div class="w-6 h-6 rounded-sm bg-surface-2 border border-line flex items-center justify-center text-[10px] font-retro text-brand">
                     {{ p.author.slice(0, 2).toUpperCase() }}
                   </div>
-                  <span class="font-medium text-on-surface text-[11px]">{{ p.author }}</span>
+                  <span class="font-medium text-ink text-[11px]">{{ p.author }}</span>
                 </div>
               </td>
               <td class="py-3.5 px-4 text-center">
-                <span
-                  class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold inline-block"
-                  [class.bg-emerald-50]="p.status === 'Vigente'"
-                  [class.text-emerald-700]="p.status === 'Vigente'"
-                  [class.bg-amber-50]="p.status === 'Modificado'"
-                  [class.text-amber-700]="p.status === 'Modificado'"
+                <app-arcade-badge
+                  [tone]="p.status === 'Vigente' ? 'green' : 'yellow'"
+                  appearance="outline"
+                  size="sm"
                 >
                   {{ p.status }}
-                </span>
+                </app-arcade-badge>
               </td>
-              <td class="py-3.5 px-4 text-right font-mono text-[11px] text-outline">{{ p.lastSync }}</td>
+              <td class="py-3.5 px-4 text-right font-mono text-[11px] text-ink-soft">{{ p.lastSync }}</td>
             </tr>
           }
         </tbody>
@@ -147,34 +151,34 @@
     </div>
   </div>
 
-  <!-- Sección de Historial de Auditoría Global (AdminAuditLog • RF-AUD-02) -->
-  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm p-6 space-y-4">
-    <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest">
+  <!-- Sección de Historial de Auditoría Global (AdminAuditLog • RF-AUD-02) Arcade -->
+  <div class="arcade-card arcade-corners p-5 sm:p-6 space-y-4">
+    <div class="flex items-center justify-between pb-3 border-b border-line">
       <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-primary text-[22px]">history_edu</span>
+        <span class="material-symbols-outlined text-brand text-[22px]">history_edu</span>
         <div>
-          <h2 class="text-base font-bold text-on-surface">Bitácora de Auditoría Operativa (AdminAuditLog)</h2>
-          <p class="text-xs text-on-surface-variant">Trazabilidad obligatoria de cambios en parámetros (RF-AUD-01 / RF-AUD-02) con IP y justificación</p>
+          <h2 class="text-base font-bold text-ink font-mono">Bitácora de Auditoría Operativa (AdminAuditLog)</h2>
+          <p class="text-xs text-ink-soft font-mono">Trazabilidad obligatoria de cambios en parámetros (RF-AUD-01 / RF-AUD-02) con IP y justificación</p>
         </div>
       </div>
-      <span class="text-xs font-mono px-2.5 py-1 rounded bg-surface-container-high text-outline">Persistencia en Tema 01</span>
+      <app-arcade-badge tone="neutral" appearance="outline" size="sm">Persistencia en Tema 01</app-arcade-badge>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       @for (log of auditHistory(); track log.id) {
-        <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20 hover:border-primary/30 transition-all flex flex-col justify-between space-y-3">
+        <div class="arcade-card p-4 hover:border-brand/60 transition-all flex flex-col justify-between space-y-3 font-mono">
           <div class="space-y-1.5">
             <div class="flex items-center justify-between">
-              <span class="font-mono font-bold text-xs text-primary px-2 py-0.5 rounded bg-primary-fixed">{{ log.paramCode }}</span>
-              <span class="text-[10px] text-outline font-mono">{{ log.timeAgo }}</span>
+              <span class="font-retro text-xs text-brand">{{ log.paramCode }}</span>
+              <span class="text-[10px] text-ink-soft">{{ log.timeAgo }}</span>
             </div>
-            <div class="text-xs font-bold text-on-surface">{{ log.changeDescription }}</div>
-            <p class="text-xs text-on-surface-variant italic leading-relaxed">"{{ log.justification }}"</p>
+            <div class="text-xs font-bold text-ink">{{ log.changeDescription }}</div>
+            <p class="text-xs text-ink-soft italic leading-relaxed">"{{ log.justification }}"</p>
           </div>
 
-          <div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-outline font-mono">
+          <div class="pt-2 border-t border-line flex items-center justify-between text-[11px] text-ink-soft">
             <span>{{ log.actor }}</span>
-            <span class="font-semibold text-on-surface">IP: {{ log.ip }}</span>
+            <span class="font-bold text-ink">IP: {{ log.ip }}</span>
           </div>
         </div>
       }

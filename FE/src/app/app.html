@@ -1,13 +1,16 @@
-<div class="h-full flex flex-col overflow-hidden">
-  <!-- Header Institucional Único -->
+<div class="h-full flex flex-col overflow-hidden bg-canvas text-ink transition-colors duration-200 relative">
+  <!-- Scanline CRT Overlay Retro Arcade -->
+  <div class="crt-overlay fixed inset-0 pointer-events-none z-50"></div>
+
+  <!-- Header Institucional con ArcadeNavbar y Theme Switcher -->
   <app-header />
 
-  <!-- Layout: Sidebar Único + Router Outlet (Cero Iframes, Cero Paneles Duplicados) -->
-  <div class="flex-1 flex overflow-hidden">
+  <!-- Layout: Sidebar + Router Outlet -->
+  <div class="flex-1 flex overflow-hidden relative z-10">
     <app-sidebar />
 
     <!-- Viewport Principal de la SPA -->
-    <main class="flex-1 overflow-y-auto bg-surface relative">
+    <main class="flex-1 overflow-y-auto bg-canvas relative p-2 sm:p-4">
       <router-outlet />
     </main>
   </div>

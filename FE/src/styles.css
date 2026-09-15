@@ -1,1 +1,215 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================================================
+   tup-arcade-ui (PiposLibrary) — Retro Arcade Design System for Angular 21
+   ========================================================================== */
+
+/* Paleta oficial: Tema Claro (gris cremita arcade) */
+:root,
+:root[data-theme='light'] {
+  --bg-app: #d6dcdd;
+  --bg-surface: #e6ebec;
+  --bg-surface-alt: #dce2e3;
+  --border-subtle: #b8c5c9;
+  --border-highlight: #b8c5c9;
+  --text-primary: #1e293b;
+  --text-muted: #64748b;
+  --accent-primary: #1e7a85;
+  --accent-secondary: #6e93a0;
+  --accent-gold: #f1b434;
+  --accent-danger: #e24a4a;
+  --accent-success: #2fa866;
+}
+
+/* Paleta oficial: Tema Oscuro (cyber / arcade dark) */
+:root[data-theme='dark'] {
+  --bg-app: #0b111e;
+  --bg-surface: #151e2e;
+  --bg-surface-alt: #101a29;
+  --border-subtle: #24334a;
+  --border-highlight: #8c733e;
+  --text-primary: #edf2f7;
+  --text-muted: #8a99ad;
+  --accent-primary: #d94e82;
+  --accent-secondary: #00bcd4;
+  --accent-gold: #f6ad3c;
+  --accent-danger: #ef4444;
+  --accent-success: #10b981;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: 'Barlow', 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Tipografía Pixel Arcade */
+.font-retro {
+  font-family: 'Press Start 2P', monospace;
+}
+
+.font-arcade {
+  font-family: 'VT323', monospace;
+}
+
+/* Keyframes Retro */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; filter: drop-shadow(0 0 6px var(--accent-primary)); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Scanline and retro CRT glow effect */
+.crt-overlay {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+[data-theme='light'] .crt-overlay {
+  opacity: 0.25;
+}
+
+/* ==========================================================================
+   Componentes Utilitarios tup-arcade-ui (PiposLibrary)
+   ========================================================================== */
+
+/* Botón Táctil Arcade con sombra sólida 3D y efecto presionado */
+.btn-arcade-pipos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s ease;
+}
+
+.btn-arcade-pipos:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: none !important;
+}
+
+/* Variantes de Botón */
+.btn-arcade-cyan {
+  background-color: var(--accent-secondary);
+  color: #0b111e;
+  border-color: var(--accent-secondary);
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--accent-secondary) 65%, black);
+}
+
+.btn-arcade-magenta {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--accent-primary) 65%, black);
+}
+
+.btn-arcade-yellow {
+  background-color: var(--accent-gold);
+  color: #0b111e;
+  border-color: var(--accent-gold);
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--accent-gold) 65%, black);
+}
+
+.btn-arcade-green {
+  background-color: var(--accent-success);
+  color: #0b111e;
+  border-color: var(--accent-success);
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--accent-success) 65%, black);
+}
+
+.btn-arcade-neutral {
+  background-color: var(--bg-surface-alt);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--border-subtle) 75%, black);
+}
+
+/* Tarjeta Arcade con esquinas pixeladas decorativas */
+.arcade-card {
+  position: relative;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Pixel corners */
+.arcade-corners::before,
+.arcade-corners::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: var(--border-highlight);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.arcade-corners::before {
+  top: -1px;
+  left: -1px;
+}
+
+.arcade-corners::after {
+  bottom: -1px;
+  right: -1px;
+}
+
+/* Badges Pixel */
+.badge-arcade {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 6px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 3px;
+  line-height: 1.2;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}

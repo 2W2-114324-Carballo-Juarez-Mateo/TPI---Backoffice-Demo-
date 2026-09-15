@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ArcadeBadgeComponent } from '../../shared/arcade/arcade-badge/arcade-badge.component';
 
 export interface ProviderItem {
   readonly id: string;
@@ -38,7 +39,7 @@ export interface GoldenSetRun {
 
 @Component({
   selector: 'app-gobernanza-llm',
-  imports: [],
+  imports: [ArcadeBadgeComponent],
   templateUrl: './gobernanza-llm.html',
   styleUrl: './gobernanza-llm.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

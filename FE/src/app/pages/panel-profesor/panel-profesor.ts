@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ArcadeBadgeComponent } from '../../shared/arcade/arcade-badge/arcade-badge.component';
 
 export interface StudentRow {
   readonly legajo: string;
@@ -16,7 +17,7 @@ export interface StudentRow {
 
 @Component({
   selector: 'app-panel-profesor',
-  imports: [],
+  imports: [ArcadeBadgeComponent],
   templateUrl: './panel-profesor.html',
   styleUrl: './panel-profesor.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
