@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ArcadeBadgeComponent } from '../../shared/arcade/arcade-badge/arcade-badge.component';
 
 export interface ServiceNodeHealth {
   readonly id: string;
@@ -23,7 +24,7 @@ export interface CrossServiceTrace {
 
 @Component({
   selector: 'app-salud-trazabilidad',
-  imports: [],
+  imports: [ArcadeBadgeComponent],
   templateUrl: './salud-trazabilidad.html',
   styleUrl: './salud-trazabilidad.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

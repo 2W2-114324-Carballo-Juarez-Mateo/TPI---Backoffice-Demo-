@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ArcadeBadgeComponent } from '../../shared/arcade/arcade-badge/arcade-badge.component';
 
 export interface CatedraItem {
   readonly code: string;
@@ -35,7 +36,7 @@ export interface AccessAuditLog {
 
 @Component({
   selector: 'app-gestion-catedras',
-  imports: [],
+  imports: [ArcadeBadgeComponent],
   templateUrl: './gestion-catedras.html',
   styleUrl: './gestion-catedras.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

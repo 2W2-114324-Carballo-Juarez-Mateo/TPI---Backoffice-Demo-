@@ -1,89 +1,89 @@
-<div class="p-8 space-y-8 max-w-7xl mx-auto">
+<div class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto">
   <!-- Cabecera Institucional Superior -->
-  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm">
-    <div class="space-y-1">
+  <div class="arcade-card arcade-corners p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+    <div class="space-y-1.5">
       <div class="flex items-center gap-2">
-        <span class="text-xs font-mono px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">MOD-02</span>
-        <span class="text-xs font-mono text-outline">v2.4.0-PROD</span>
-        <span class="text-xs text-outline">•</span>
-        <span class="text-xs text-outline font-semibold text-primary">Tema 12 • FRC Core</span>
+        <app-arcade-badge tone="cyan" appearance="solid" size="sm">MOD-02</app-arcade-badge>
+        <span class="font-retro text-[8px] text-ink-soft">v0.2.2-PROD</span>
+        <span class="text-ink-soft">•</span>
+        <span class="text-xs font-mono font-bold text-brand uppercase">Tema 12 • FRC Core</span>
       </div>
-      <h1 class="text-2xl font-bold text-on-surface tracking-tight">Observabilidad Institucional FRC</h1>
-      <p class="text-xs text-on-surface-variant max-w-3xl">
+      <h1 class="text-2xl sm:text-3xl font-black text-ink tracking-tight">Observabilidad Institucional FRC</h1>
+      <p class="text-xs sm:text-sm text-ink-soft max-w-3xl font-medium">
         Telemetría y gobernanza analítica en tiempo real para campus FRC Core. Supervisión de los 7 KPIs del PRD, deriva algorítmica de IA y seguridad perimetral.
       </p>
     </div>
 
     <div class="flex flex-wrap items-center gap-3">
-      <div class="bg-surface-container-low px-4 py-2 rounded-xl flex items-center gap-3 border border-outline-variant/30">
-        <span class="material-symbols-outlined text-primary text-[20px]">calendar_month</span>
+      <div class="bg-surface-2 px-3 py-2 rounded-sm flex items-center gap-2.5 border border-line">
+        <span class="material-symbols-outlined text-brand text-[18px]">calendar_month</span>
         <div class="flex flex-col">
-          <span class="text-[10px] font-bold text-outline uppercase tracking-wider">Período Académico</span>
-          <span class="text-xs font-semibold text-on-surface">{{ selectedPeriod() }}</span>
+          <span class="text-[9px] font-retro text-ink-soft uppercase">Período Académico</span>
+          <span class="text-xs font-mono font-bold text-ink">{{ selectedPeriod() }}</span>
         </div>
       </div>
-      <div class="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-2 rounded-xl text-xs font-medium">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>Ciclo Activo</span>
-      </div>
+      <app-arcade-badge tone="green" appearance="solid" size="md">
+        <span class="w-1.5 h-1.5 rounded-full bg-slate-950 animate-pulse mr-1"></span>
+        <span>CICLO ACTIVO</span>
+      </app-arcade-badge>
       <button
         (click)="triggerKafkaSync()"
         [disabled]="isSyncing()"
-        class="bg-primary hover:bg-primary-container text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm disabled:opacity-50"
+        class="btn-arcade-pipos btn-arcade-magenta px-4 py-2.5 flex items-center gap-2"
       >
-        <span class="material-symbols-outlined text-[16px]" [class.animate-spin]="isSyncing()">sync</span>
+        <span class="material-symbols-outlined text-[15px]" [class.animate-spin]="isSyncing()">sync</span>
         <span>{{ isSyncing() ? 'Sincronizando...' : 'Sincronizar Kafka' }}</span>
       </button>
     </div>
   </div>
 
   @if (syncMessage()) {
-    <div class="bg-primary-fixed/30 border border-primary/20 text-on-primary-fixed px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
-      <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+    <div class="arcade-card p-3.5 border-brand/60 bg-brand/10 text-brand rounded-sm flex items-center gap-2.5 text-xs font-bold animate-fadeIn">
+      <span class="material-symbols-outlined text-brand text-[18px]">verified</span>
       <span>{{ syncMessage() }}</span>
     </div>
   }
 
   @if (modalMessage()) {
-    <div class="bg-surface-container-highest border border-primary/30 text-on-surface px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
-      <span class="material-symbols-outlined text-secondary text-[18px]">info</span>
+    <div class="arcade-card p-3.5 border-brand-2/60 bg-brand-2/10 text-ink rounded-sm flex items-center gap-2.5 text-xs font-bold animate-fadeIn">
+      <span class="material-symbols-outlined text-brand-2 text-[18px]">info</span>
       <span>{{ modalMessage() }}</span>
     </div>
   }
 
-  <!-- 4 KPIs Oficiales Institucionales FRC (PRD) -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <!-- Los 7 KPIs Oficiales Institucionales FRC (Tabla 1 PRD) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
     @for (kpi of officialKpis(); track kpi.code) {
-      <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between hover:border-primary/40 transition-all">
+      <div class="arcade-card arcade-corners p-5 hover:border-brand transition-all flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-surface-container-high text-primary">
+            <app-arcade-badge tone="cyan" appearance="outline" size="sm">
               {{ kpi.code }} • {{ kpi.category }}
-            </span>
-            <span class="text-[11px] font-semibold text-emerald-700">{{ kpi.delta }}</span>
+            </app-arcade-badge>
+            <span class="text-[10px] font-retro text-success font-bold">{{ kpi.delta }}</span>
           </div>
-          <h2 class="text-xs font-semibold text-outline uppercase tracking-wider">{{ kpi.title }}</h2>
-          <div class="text-2xl font-bold text-on-surface font-mono tracking-tight mt-1">{{ kpi.value }}</div>
+          <h2 class="text-xs font-semibold text-ink-soft uppercase tracking-wider">{{ kpi.title }}</h2>
+          <div class="text-2xl sm:text-3xl font-bold text-ink font-retro tracking-tight mt-1.5">{{ kpi.value }}</div>
           @if (kpi.stars) {
-            <div class="text-xs text-amber-500 font-semibold mt-0.5">{{ kpi.stars }}</div>
+            <div class="text-xs text-gold font-retro mt-1">{{ kpi.stars }}</div>
           }
         </div>
         
-        <div class="mt-4 pt-3 border-t border-surface-container-highest space-y-1.5">
+        <div class="mt-4 pt-3 border-t border-line space-y-2">
           @if (kpi.code === 'KPI-03 / 04') {
             <!-- Barra visual tri-partita (Aprobados 74.8%, Regular 16.8%, Abandono 8.4%) -->
-            <div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden flex my-2">
-              <div class="h-full bg-emerald-500" style="width: 74.8%" title="Aprobados: 74.8%"></div>
-              <div class="h-full bg-amber-400" style="width: 16.8%" title="Regulares: 16.8%"></div>
-              <div class="h-full bg-rose-500" style="width: 8.4%" title="Abandono: 8.4%"></div>
+            <div class="w-full h-2 rounded-sm bg-surface-2 overflow-hidden flex my-2 border border-line">
+              <div class="h-full bg-success" style="width: 74.8%" title="Aprobados: 74.8%"></div>
+              <div class="h-full bg-gold" style="width: 16.8%" title="Regulares: 16.8%"></div>
+              <div class="h-full bg-danger" style="width: 8.4%" title="Abandono: 8.4%"></div>
             </div>
           }
-          <div class="flex items-center justify-between text-[11px]">
-            <span class="text-on-surface-variant">{{ kpi.details }}</span>
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-ink-soft font-medium">{{ kpi.details }}</span>
           </div>
-          <div class="flex items-center justify-between text-[10px] text-outline font-mono">
+          <div class="flex items-center justify-between text-[10px] text-ink-soft font-mono">
             <span>{{ kpi.badge }}</span>
-            <span class="text-primary font-semibold">{{ kpi.tema }}</span>
+            <span class="text-brand font-bold">{{ kpi.tema }}</span>
           </div>
         </div>
       </div>
@@ -91,63 +91,63 @@
   </div>
 
   <!-- Grid Principal (50% Monitor Drift LLM / 50% Seguridad e Incidentes) -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <!-- Panel Izquierdo: Monitor de Deriva (Drift) Evaluador LLM (Tema 07) -->
-    <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+    <div class="arcade-card arcade-corners p-6 flex flex-col justify-between">
       <div>
-        <div class="flex items-center justify-between pb-4 border-b border-surface-container-highest mb-4">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-[22px]">psychology</span>
+        <div class="flex items-center justify-between pb-4 border-b-2 border-line mb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-brand text-[22px]">psychology</span>
             <div>
-              <h2 class="text-base font-bold text-on-surface">Monitor de Deriva (Drift) Evaluador LLM</h2>
-              <p class="text-xs text-on-surface-variant">Calibración contra el Golden Set Base Institucional (RF-IA-31 • PAR-14)</p>
+              <h2 class="text-base font-black text-ink tracking-tight">Monitor de Deriva (Drift) Evaluador LLM</h2>
+              <p class="text-xs text-ink-soft font-medium mt-0.5">Calibración contra el Golden Set Base Institucional (RF-IA-31 • PAR-14)</p>
             </div>
           </div>
-          <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-            Estable (PAR-14 OK)
-          </span>
+          <app-arcade-badge tone="green" appearance="solid" size="sm">
+            PAR-14 OK
+          </app-arcade-badge>
         </div>
 
         <!-- Franja de métricas del modelo -->
-        <div class="grid grid-cols-3 gap-3 p-3.5 bg-surface-container-low rounded-xl mb-6 text-xs border border-outline-variant/20">
+        <div class="grid grid-cols-3 gap-3 p-3.5 bg-surface-2 rounded-sm mb-6 text-xs border border-line">
           <div>
-            <span class="text-[10px] text-outline uppercase font-semibold">Modelo Activo</span>
-            <div class="font-bold text-on-surface truncate">Claude 3.5 Sonnet</div>
-            <span class="text-[10px] text-primary font-mono font-medium">RF-IA-25 Evaluador</span>
+            <span class="text-[9px] text-ink-soft uppercase font-retro">Modelo Activo</span>
+            <div class="font-bold text-ink truncate mt-0.5">Claude 3.5 Sonnet</div>
+            <span class="text-[9px] text-brand font-mono font-bold">RF-IA-25 Evaluador</span>
           </div>
           <div>
-            <span class="text-[10px] text-outline uppercase font-semibold">Desvío Promedio</span>
-            <div class="font-bold text-emerald-700 font-mono">+2.4 pts</div>
-            <span class="text-[10px] text-outline">Tolerancia: ±5.0 pts</span>
+            <span class="text-[9px] text-ink-soft uppercase font-retro">Desvío Promedio</span>
+            <div class="font-bold text-success font-mono text-sm mt-0.5">+2.4 pts</div>
+            <span class="text-[9px] text-ink-soft font-mono">Tolerancia: ±5.0</span>
           </div>
           <div>
-            <span class="text-[10px] text-outline uppercase font-semibold">Última Calibración</span>
-            <div class="font-bold text-on-surface font-mono">Hoy, 09:15 UTC</div>
-            <span class="text-[10px] text-outline">50 Transcripciones</span>
+            <span class="text-[9px] text-ink-soft uppercase font-retro">Última Calibración</span>
+            <div class="font-bold text-ink font-mono mt-0.5">Hoy, 09:15 UTC</div>
+            <span class="text-[9px] text-ink-soft font-mono">50 Muestras</span>
           </div>
         </div>
 
         <!-- Barras de 5 Dimensiones Golden Set -->
         <div class="space-y-4">
-          <h3 class="text-xs font-semibold text-outline uppercase tracking-wider">Dimensiones Evaluadas vs. Rúbrica Cátedra</h3>
+          <h3 class="text-xs font-bold text-ink uppercase tracking-wider">Dimensiones Evaluadas vs. Rúbrica Cátedra</h3>
           @for (dim of driftDimensions(); track dim.name) {
             <div>
               <div class="flex justify-between items-center text-xs mb-1">
-                <span class="font-medium text-on-surface">{{ dim.name }}</span>
+                <span class="font-medium text-ink">{{ dim.name }}</span>
                 <div class="flex items-center gap-2 font-mono">
                   <span
-                    class="font-semibold text-[11px]"
-                    [class.text-emerald-700]="dim.deltaType === 'positive'"
-                    [class.text-amber-700]="dim.deltaType === 'negative'"
+                    class="font-bold text-[11px]"
+                    [class.text-success]="dim.deltaType === 'positive'"
+                    [class.text-gold]="dim.deltaType === 'negative'"
                   >
                     {{ dim.delta }}
                   </span>
-                  <span class="text-outline text-[11px]">({{ dim.scorePercent }}%)</span>
+                  <span class="text-ink-soft text-[11px]">({{ dim.scorePercent }}%)</span>
                 </div>
               </div>
-              <div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+              <div class="w-full bg-surface-2 border border-line h-2 rounded-sm overflow-hidden">
                 <div
-                  class="h-full bg-primary rounded-full transition-all duration-500"
+                  class="h-full bg-brand rounded-sm transition-all duration-500"
                   [style.width.%]="dim.scorePercent"
                 ></div>
               </div>
@@ -156,63 +156,63 @@
         </div>
       </div>
 
-      <div class="mt-6 pt-4 border-t border-surface-container-highest flex flex-col sm:flex-row justify-between items-center gap-3">
-        <span class="text-xs text-on-surface-variant font-mono">Evaluaciones analizadas hoy: <strong>18,490</strong></span>
+      <div class="mt-6 pt-4 border-t-2 border-line flex flex-col sm:flex-row justify-between items-center gap-3">
+        <span class="text-xs text-ink-soft font-mono">Evaluaciones analizadas hoy: <strong class="text-ink">18,490</strong></span>
         <button
           (click)="openPar14Matrix()"
-          class="text-xs font-semibold text-primary hover:text-primary-container flex items-center gap-1 transition-colors"
+          class="btn-arcade-pipos btn-arcade-cyan px-3 py-1.5 flex items-center gap-1.5"
         >
           <span>Abrir Matriz PAR-14</span>
-          <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+          <span class="material-symbols-outlined text-[14px]">open_in_new</span>
         </button>
       </div>
     </div>
 
     <!-- Panel Derecho: Seguridad e Incidentes Activos (Temas 07 / 11) -->
-    <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+    <div class="arcade-card arcade-corners p-6 flex flex-col justify-between">
       <div>
-        <div class="flex items-center justify-between pb-4 border-b border-surface-container-highest mb-4">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-secondary text-[22px]">security</span>
+        <div class="flex items-center justify-between pb-4 border-b-2 border-line mb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-brand-2 text-[22px]">security</span>
             <div>
-              <h2 class="text-base font-bold text-on-surface">Seguridad e Incidentes Activos</h2>
-              <p class="text-xs text-on-surface-variant">Protección perimetral WAF FRC, guardrails de LLM y auditoría</p>
+              <h2 class="text-base font-black text-ink tracking-tight">Seguridad e Incidentes Activos</h2>
+              <p class="text-xs text-ink-soft font-medium mt-0.5">Protección perimetral WAF FRC, guardrails de LLM y auditoría</p>
             </div>
           </div>
-          <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-            0 Críticos / 3 Mitigados
-          </span>
+          <app-arcade-badge tone="green" appearance="solid" size="sm">
+            0 CRÍTICOS / 3 MITIGADOS
+          </app-arcade-badge>
         </div>
 
-        <div class="bg-primary/5 border border-primary/15 rounded-xl p-3.5 mb-6 flex items-center justify-between">
+        <div class="bg-surface-2 border border-line rounded-sm p-3.5 mb-6 flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <span class="material-symbols-outlined text-primary text-[20px]">shield</span>
+            <span class="material-symbols-outlined text-brand-2 text-[20px]">shield</span>
             <div>
-              <div class="text-xs font-bold text-on-surface">Protección Perimetral Activa</div>
-              <div class="text-[11px] text-on-surface-variant">WAF FRC Core & LLM Guardrails operando al 99.98% de disponibilidad</div>
+              <div class="text-xs font-bold text-ink">Protección Perimetral Activa</div>
+              <div class="text-[11px] text-ink-soft">WAF FRC Core & LLM Guardrails operando al 99.98% de disponibilidad</div>
             </div>
           </div>
-          <span class="text-[11px] font-mono font-semibold text-primary px-2 py-0.5 rounded bg-primary-fixed">SLA 99.98%</span>
+          <app-arcade-badge tone="cyan" appearance="solid" size="sm">SLA 99.98%</app-arcade-badge>
         </div>
 
         <!-- Feed de Incidentes Mitigados -->
         <div class="space-y-3">
-          <h3 class="text-xs font-semibold text-outline uppercase tracking-wider">Últimos Eventos de Seguridad Mitigados</h3>
+          <h3 class="text-xs font-bold text-ink uppercase tracking-wider">Últimos Eventos Mitigados</h3>
           @for (inc of securityIncidents(); track inc.id) {
-            <div class="p-3.5 rounded-xl bg-surface-container-low border border-outline-variant/20 hover:border-primary/30 transition-all">
+            <div class="p-3 rounded-sm bg-surface-2 border border-line transition-all">
               <div class="flex items-center justify-between mb-1">
-                <span class="text-xs font-bold text-on-surface flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full" [class.bg-amber-500]="inc.severity === 'warning'" [class.bg-primary]="inc.severity === 'info'"></span>
+                <span class="text-xs font-bold text-ink flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full" [class.bg-gold]="inc.severity === 'warning'" [class.bg-brand-2]="inc.severity === 'info'"></span>
                   {{ inc.title }}
                 </span>
-                <span class="text-[10px] text-outline font-mono">{{ inc.timeAgo }}</span>
+                <span class="text-[9px] text-ink-soft font-mono">{{ inc.timeAgo }}</span>
               </div>
-              <div class="text-[11px] text-on-surface-variant flex flex-wrap items-center gap-2 mt-1">
-                <span class="font-mono text-primary font-medium">{{ inc.endpointOrContext }}</span>
+              <div class="text-[11px] text-ink-soft flex flex-wrap items-center gap-2 mt-1">
+                <span class="font-mono text-brand font-bold">{{ inc.endpointOrContext }}</span>
                 <span>•</span>
-                <span class="font-mono text-outline">{{ inc.ipOrActor }}</span>
+                <span class="font-mono text-ink-soft">{{ inc.ipOrActor }}</span>
               </div>
-              <div class="mt-2 text-[11px] font-medium text-emerald-700 flex items-center gap-1">
+              <div class="mt-2 text-[11px] font-bold text-success flex items-center gap-1">
                 <span class="material-symbols-outlined text-[14px]">check_circle</span>
                 <span>Acción: {{ inc.actionTaken }}</span>
               </div>
@@ -221,37 +221,37 @@
         </div>
       </div>
 
-      <div class="mt-6 pt-4 border-t border-surface-container-highest flex flex-col sm:flex-row justify-between items-center gap-3">
-        <span class="text-xs text-on-surface-variant">Políticas activas: <strong class="font-mono text-on-surface">32 Reglas Perimetrales</strong></span>
+      <div class="mt-6 pt-4 border-t-2 border-line flex flex-col sm:flex-row justify-between items-center gap-3">
+        <span class="text-xs text-ink-soft">Políticas activas: <strong class="font-mono text-ink">32 Reglas Perimetrales</strong></span>
         <button
           (click)="viewAuditLogs()"
-          class="text-xs font-semibold text-secondary hover:text-primary flex items-center gap-1 transition-colors"
+          class="btn-arcade-pipos btn-arcade-neutral px-3 py-1.5 flex items-center gap-1.5"
         >
           <span>Ver Logs de Auditoría</span>
-          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- Franja Inferior de Salud de Clúster e Infraestructura -->
-  <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/30 shadow-sm flex flex-wrap items-center justify-between gap-4">
+  <div class="arcade-card p-4 flex flex-wrap items-center justify-between gap-4">
     <div class="flex flex-wrap items-center gap-6 text-xs font-medium">
       <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-        <span class="text-on-surface">Servicios de Datos: <strong>OK</strong></span>
+        <span class="w-2 h-2 rounded-full bg-success"></span>
+        <span class="text-ink">Servicios de Datos: <strong class="text-success font-retro text-[9px]">ONLINE</strong></span>
       </div>
       <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-        <span class="text-on-surface">PostgreSQL Clúster: <strong class="font-mono">12ms</strong></span>
+        <span class="w-2 h-2 rounded-full bg-success"></span>
+        <span class="text-ink">PostgreSQL Clúster: <strong class="font-mono text-brand">12ms</strong></span>
       </div>
       <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-        <span class="text-on-surface">Procesamiento Asíncrono Kafka: <strong class="font-mono">0 lag</strong></span>
+        <span class="w-2 h-2 rounded-full bg-success"></span>
+        <span class="text-ink">Procesamiento Asíncrono Kafka: <strong class="font-mono text-brand">0 lag</strong></span>
       </div>
     </div>
-    <div class="flex items-center gap-2 font-mono text-[11px] text-outline">
-      <span class="material-symbols-outlined text-[14px]">verified_user</span>
+    <div class="flex items-center gap-2 font-mono text-[10px] text-ink-soft">
+      <span class="material-symbols-outlined text-[14px] text-brand-2">verified_user</span>
       <span>Consola Auditada bajo Norma ISO/IEC 27001 FRC</span>
     </div>
   </div>

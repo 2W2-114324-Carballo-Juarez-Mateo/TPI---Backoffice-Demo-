@@ -1,79 +1,79 @@
-<div class="p-8 space-y-8 max-w-7xl mx-auto">
+<div class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto">
   <!-- Cabecera -->
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+  <div class="arcade-card arcade-corners p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
     <div>
-      <div class="flex items-center gap-2 mb-1">
-        <span class="text-xs font-mono px-2 py-0.5 rounded bg-secondary/15 text-secondary font-semibold">MOD-03</span>
-        <span class="text-xs text-outline">•</span>
-        <span class="text-xs text-outline font-semibold text-primary">Tema 12 • FRC Core</span>
+      <div class="flex items-center gap-2 mb-1.5">
+        <app-arcade-badge tone="magenta" appearance="solid" size="sm">MOD-03</app-arcade-badge>
+        <span class="text-ink-soft">•</span>
+        <span class="text-xs font-mono font-bold text-brand uppercase">Tema 12 • FRC Core</span>
       </div>
-      <h1 class="text-2xl font-bold text-on-surface tracking-tight">Gestión y Auditoría de Cátedras</h1>
-      <p class="text-sm text-on-surface-variant mt-0.5">Auditoría de permisos cross-service, claustro docente verificado (RF-USR-02) y telemetría de comisiones.</p>
+      <h1 class="text-2xl sm:text-3xl font-black text-ink tracking-tight">Gestión y Auditoría de Cátedras</h1>
+      <p class="text-xs sm:text-sm text-ink-soft mt-0.5 font-medium">Auditoría de permisos cross-service, claustro docente verificado (RF-USR-02) y telemetría de comisiones.</p>
     </div>
 
-    <div class="flex items-center gap-3">
+    <div class="flex flex-wrap items-center gap-3">
       <button
         (click)="exportAudit()"
-        class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-colors border border-outline-variant/30"
+        class="btn-arcade-pipos btn-arcade-neutral px-3.5 py-2 flex items-center gap-1.5"
       >
-        <span class="material-symbols-outlined text-[16px]">download</span>
+        <span class="material-symbols-outlined text-[15px]">download</span>
         <span>Exportar Auditoría</span>
       </button>
       <button
         (click)="openWhitelist()"
-        class="bg-primary hover:bg-primary-container text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm"
+        class="btn-arcade-pipos btn-arcade-magenta px-4 py-2 flex items-center gap-1.5"
       >
-        <span class="material-symbols-outlined text-[16px]">how_to_reg</span>
-        <span>Lista Blanca Docente (RF-USR-02)</span>
+        <span class="material-symbols-outlined text-[15px]">how_to_reg</span>
+        <span>Lista Blanca (RF-USR-02)</span>
       </button>
     </div>
   </div>
 
   @if (toastMessage()) {
-    <div class="bg-primary-fixed/30 border border-primary/20 text-on-primary-fixed px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
-      <span class="material-symbols-outlined text-primary text-[18px]">info</span>
+    <div class="arcade-card p-3.5 border-brand/60 bg-brand/10 text-brand rounded-sm flex items-center gap-2.5 text-xs font-bold animate-fadeIn">
+      <span class="material-symbols-outlined text-brand text-[18px]">info</span>
       <span>{{ toastMessage() }}</span>
     </div>
   }
 
   <!-- Stats Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
     @for (s of stats(); track s.title) {
-      <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between hover:border-primary/40 transition-all">
+      <div class="arcade-card arcade-corners p-5 hover:border-brand transition-all flex flex-col justify-between">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-xs uppercase font-semibold text-outline tracking-wider">{{ s.title }}</span>
-          <span class="p-2 rounded-xl bg-surface-container-high text-secondary material-symbols-outlined text-[20px]">{{ s.icon }}</span>
+          <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">{{ s.title }}</span>
+          <span class="w-8 h-8 rounded-sm bg-surface-2 border border-line flex items-center justify-center text-brand-2 material-symbols-outlined text-[18px]">{{ s.icon }}</span>
         </div>
         <div>
-          <div class="text-2xl font-bold text-on-surface font-mono">{{ s.value }}</div>
-          <p class="text-xs text-outline mt-1 font-medium">{{ s.sub }}</p>
+          <div class="text-2xl sm:text-3xl font-bold text-ink font-retro">{{ s.value }}</div>
+          <p class="text-xs text-ink-soft mt-1.5 font-medium">{{ s.sub }}</p>
         </div>
       </div>
     }
   </div>
 
   <!-- Contenedor Principal: Tabla de Cátedras con Permisos -->
-  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden">
+  <div class="arcade-card arcade-corners overflow-hidden">
     <!-- Toolbar de Filtros -->
-    <div class="p-6 border-b border-surface-container-highest flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+    <div class="p-6 border-b-2 border-line bg-surface-2/40 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
       <div class="relative flex-1 max-w-md">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-soft text-[18px]">search</span>
         <input
           type="text"
           [value]="searchTerm()"
           (input)="onSearch($event)"
           placeholder="Buscar por cátedra, código PAR o profesor..."
-          class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl text-xs text-on-surface placeholder:text-outline border-none focus:ring-2 focus:ring-primary"
+          class="w-full pl-10 pr-4 py-2 bg-surface border-2 border-line rounded-sm text-xs text-ink placeholder:text-ink-soft font-mono focus:outline-none focus:border-brand"
         />
       </div>
 
       <div class="flex flex-wrap items-center gap-3">
         <div class="flex items-center gap-2">
-          <span class="text-xs text-outline font-medium">Depto:</span>
+          <span class="text-xs text-ink font-bold font-mono">Depto:</span>
           <select
             [value]="selectedDept()"
             (change)="onSelectDept($event)"
-            class="bg-surface-container-high rounded-xl text-xs px-3 py-2 text-on-surface border-none focus:ring-2 focus:ring-primary font-medium"
+            class="bg-surface border-2 border-line rounded-sm text-xs px-3 py-2 text-ink font-mono focus:outline-none focus:border-brand font-medium"
           >
             <option value="Todos">Todos los Deptos</option>
             <option value="Sistemas">Sistemas</option>
@@ -84,11 +84,11 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <span class="text-xs text-outline font-medium">Rol:</span>
+          <span class="text-xs text-ink font-bold font-mono">Rol:</span>
           <select
             [value]="selectedRole()"
             (change)="onSelectRole($event)"
-            class="bg-surface-container-high rounded-xl text-xs px-3 py-2 text-on-surface border-none focus:ring-2 focus:ring-primary font-medium"
+            class="bg-surface border-2 border-line rounded-sm text-xs px-3 py-2 text-ink font-mono focus:outline-none focus:border-brand font-medium"
           >
             <option value="Todos">Todos los Roles</option>
             <option value="Titular">Titular</option>
@@ -101,55 +101,57 @@
 
     <!-- Tabla -->
     <div class="overflow-x-auto">
-      <table class="w-full text-left text-xs">
-        <thead class="bg-surface-container-low text-on-surface-variant font-semibold border-b border-surface-container-highest">
+      <table class="w-full text-left text-xs border-collapse">
+        <thead class="bg-surface-2 text-ink font-retro text-[9px] border-b-2 border-line uppercase">
           <tr>
-            <th class="py-3.5 px-4">Cátedra / Código PAR</th>
-            <th class="py-3.5 px-4">Departamento</th>
-            <th class="py-3.5 px-4">Cuerpo Docente</th>
-            <th class="py-3.5 px-4 text-center">Permisos Microservicios (1-6)</th>
-            <th class="py-3.5 px-4 text-center">Matrícula</th>
-            <th class="py-3.5 px-4 text-right">Estado</th>
-            <th class="py-3.5 px-4 text-right">Acciones</th>
+            <th class="py-3 px-4">Cátedra / Código PAR</th>
+            <th class="py-3 px-4">Departamento</th>
+            <th class="py-3 px-4">Cuerpo Docente</th>
+            <th class="py-3 px-4 text-center">Permisos Microservicios (1-6)</th>
+            <th class="py-3 px-4 text-center">Matrícula</th>
+            <th class="py-3 px-4 text-right">Estado</th>
+            <th class="py-3 px-4 text-right">Acciones</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-surface-container-highest">
+        <tbody class="divide-y divide-line font-mono">
           @for (c of filteredCatedras(); track c.code) {
-            <tr class="hover:bg-surface-container-low transition-colors">
+            <tr class="hover:bg-surface-2/60 transition-colors">
               <td class="py-3.5 px-4">
-                <div class="font-bold text-on-surface text-xs">{{ c.name }}</div>
-                <div class="font-mono text-[10px] text-primary font-semibold mt-0.5">{{ c.code }}</div>
+                <div class="font-bold text-ink text-xs font-sans">{{ c.name }}</div>
+                <div class="font-mono text-[10px] text-brand font-bold mt-0.5">{{ c.code }}</div>
               </td>
               <td class="py-3.5 px-4">
-                <div class="font-medium text-on-surface">{{ c.dept }}</div>
-                <div class="text-[10px] text-outline">{{ c.level }}</div>
+                <div class="font-medium text-ink font-sans">{{ c.dept }}</div>
+                <div class="text-[10px] text-ink-soft">{{ c.level }}</div>
               </td>
-              <td class="py-3.5 px-4">
+              <td class="py-3.5 px-4 font-sans">
                 <div class="flex items-center gap-2">
-                  <div class="w-7 h-7 rounded-full bg-surface-container-highest text-primary flex items-center justify-center font-bold text-[10px]">
+                  <div class="w-7 h-7 rounded-sm bg-surface-2 border border-line text-brand flex items-center justify-center font-bold text-[10px]">
                     {{ c.titular.slice(0, 2) }}
                   </div>
                   <div>
-                    <div class="font-medium text-on-surface flex items-center gap-1.5">
+                    <div class="font-medium text-ink flex items-center gap-1.5">
                       <span>{{ c.titular }}</span>
-                      <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-surface-container-high text-outline">
+                      <app-arcade-badge tone="neutral" appearance="solid" size="sm">
                         {{ c.role }}
-                      </span>
+                      </app-arcade-badge>
                     </div>
-                    <div class="text-[10px] text-outline">{{ c.auxiliares }}</div>
+                    <div class="text-[10px] text-ink-soft">{{ c.auxiliares }}</div>
                   </div>
                 </div>
               </td>
-              <!-- Píldoras visuales circulares 1 al 6 -->
+              <!-- Píldoras circulares de permisos 1 al 6 -->
               <td class="py-3.5 px-4">
                 <div class="flex items-center justify-center gap-1.5">
                   @for (perm of c.permisos; track $index) {
                     <span
-                      class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold transition-all"
-                      [class.bg-emerald-500]="perm"
-                      [class.text-white]="perm"
-                      [class.bg-surface-container-high]="!perm"
-                      [class.text-outline]="!perm"
+                      class="w-5 h-5 rounded-sm flex items-center justify-center text-[10px] font-retro transition-all border"
+                      [class.bg-success]="perm"
+                      [class.text-slate-950]="perm"
+                      [class.border-success]="perm"
+                      [class.bg-surface-2]="!perm"
+                      [class.text-ink-soft]="!perm"
+                      [class.border-line]="!perm"
                       [title]="'Microservicio ' + ($index + 1) + (perm ? ': Habilitado' : ': Restringido')"
                     >
                       {{ $index + 1 }}
@@ -158,26 +160,24 @@
                 </div>
               </td>
               <td class="py-3.5 px-4 text-center font-mono">
-                <span class="font-semibold text-on-surface">{{ c.matricula }}</span>
-                <span class="text-[10px] text-outline block">{{ c.comisiones }} comisiones</span>
+                <span class="font-bold text-ink">{{ c.matricula }}</span>
+                <span class="text-[10px] text-ink-soft block">{{ c.comisiones }} comisiones</span>
               </td>
               <td class="py-3.5 px-4 text-right">
-                <span
-                  class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold inline-block"
-                  [class.bg-emerald-50]="c.status === 'Activa'"
-                  [class.text-emerald-700]="c.status === 'Activa'"
-                  [class.bg-amber-50]="c.status === 'En Auditoría'"
-                  [class.text-amber-700]="c.status === 'En Auditoría'"
+                <app-arcade-badge
+                  [tone]="c.status === 'Activa' ? 'green' : 'yellow'"
+                  appearance="solid"
+                  size="sm"
                 >
                   {{ c.status }}
-                </span>
+                </app-arcade-badge>
               </td>
               <td class="py-3.5 px-4 text-right">
                 <div class="flex items-center justify-end gap-1">
                   <button
                     (click)="editPermissions(c)"
                     title="Editar Permisos"
-                    class="p-1 rounded-lg hover:bg-surface-container text-primary transition-colors"
+                    class="p-1 rounded-sm hover:bg-surface-2 text-brand transition-colors"
                   >
                     <span class="material-symbols-outlined text-[18px]">vpn_key</span>
                   </button>
@@ -186,7 +186,7 @@
             </tr>
           } @empty {
             <tr>
-              <td colspan="7" class="py-8 text-center text-outline">
+              <td colspan="7" class="py-8 text-center text-ink-soft font-mono">
                 No se encontraron cátedras con los filtros actuales
               </td>
             </tr>
@@ -199,32 +199,32 @@
   <!-- Grid Inferior: Catálogo de Microservicios (5 cols) + Auditoría de Accesos (7 cols) -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
     <!-- Columna Izquierda: Microservicios API Gateway (5 cols) -->
-    <div class="lg:col-span-5 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+    <div class="lg:col-span-5 arcade-card arcade-corners p-6 flex flex-col justify-between">
       <div>
-        <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest mb-4">
+        <div class="flex items-center justify-between pb-3 border-b-2 border-line mb-4">
           <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-[20px]">hub</span>
-            <h2 class="text-sm font-bold text-on-surface">Microservicios API Gateway (T01)</h2>
+            <span class="material-symbols-outlined text-brand text-[20px]">hub</span>
+            <h2 class="text-sm font-black text-ink">Microservicios Gateway (T01)</h2>
           </div>
-          <span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800">
-            6 / 6 Conectados
-          </span>
+          <app-arcade-badge tone="green" appearance="solid" size="sm">
+            6 / 6 NODOS
+          </app-arcade-badge>
         </div>
-        <p class="text-xs text-on-surface-variant mb-4">Catálogo referencial de contratos OpenAPI y versiones homologadas:</p>
+        <p class="text-xs text-ink-soft mb-4 font-medium">Catálogo referencial de contratos OpenAPI y versiones homologadas:</p>
 
         <div class="space-y-2.5">
           @for (ms of microservices(); track ms.id) {
-            <div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/20 flex items-center justify-between">
+            <div class="p-3 rounded-sm bg-surface-2 border border-line flex items-center justify-between">
               <div class="space-y-0.5">
                 <div class="flex items-center gap-2">
-                  <span class="font-bold text-xs text-on-surface">{{ ms.name }}</span>
-                  <span class="font-mono text-[10px] px-1.5 py-0.2 rounded bg-surface-container-high text-primary font-semibold">
+                  <span class="font-bold text-xs text-ink">{{ ms.name }}</span>
+                  <app-arcade-badge tone="cyan" appearance="outline" size="sm">
                     {{ ms.version }}
-                  </span>
+                  </app-arcade-badge>
                 </div>
-                <div class="text-[11px] text-on-surface-variant">{{ ms.description }}</div>
+                <div class="text-[11px] text-ink-soft font-medium">{{ ms.description }}</div>
               </div>
-              <span class="w-2 h-2 rounded-full bg-emerald-500" title="Operativo"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-success animate-pulse" title="Operativo"></span>
             </div>
           }
         </div>
@@ -232,35 +232,35 @@
     </div>
 
     <!-- Columna Derecha: Auditoría de Accesos Recientes (7 cols) -->
-    <div class="lg:col-span-7 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+    <div class="lg:col-span-7 arcade-card arcade-corners p-6 flex flex-col justify-between">
       <div>
-        <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest mb-4">
+        <div class="flex items-center justify-between pb-3 border-b-2 border-line mb-4">
           <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-secondary text-[20px]">policy</span>
-            <h2 class="text-sm font-bold text-on-surface">Auditoría de Accesos y Permisos</h2>
+            <span class="material-symbols-outlined text-brand-2 text-[20px]">policy</span>
+            <h2 class="text-sm font-black text-ink">Auditoría de Accesos y Permisos</h2>
           </div>
-          <span class="text-[10px] font-mono text-outline">Trazabilidad RF-AUD-01</span>
+          <span class="text-[10px] font-mono text-ink-soft">Trazabilidad RF-AUD-01</span>
         </div>
-        <p class="text-xs text-on-surface-variant mb-4">Bitácora de invocaciones cross-service con validación perimetral de IP:</p>
+        <p class="text-xs text-ink-soft mb-4 font-medium">Bitácora de invocaciones cross-service con validación perimetral de IP:</p>
 
         <div class="space-y-3">
           @for (audit of recentAudits(); track audit.id) {
             <div
-              class="p-3.5 rounded-xl bg-surface-container-low border-l-4 transition-all"
-              [class.border-l-emerald-500]="!audit.isWarning"
-              [class.border-l-amber-500]="audit.isWarning"
+              class="p-3 rounded-sm bg-surface-2 border-l-4 transition-all"
+              [class.border-l-success]="!audit.isWarning"
+              [class.border-l-gold]="audit.isWarning"
             >
               <div class="flex items-center justify-between">
-                <div class="text-xs font-medium text-on-surface">
-                  <strong class="font-semibold">{{ audit.actor }}</strong>
-                  <span class="text-on-surface-variant"> {{ audit.action }} </span>
-                  <span class="font-mono text-xs font-bold" [class.text-primary]="!audit.isWarning" [class.text-rose-600]="audit.isWarning">
+                <div class="text-xs font-medium text-ink">
+                  <strong class="font-bold text-ink">{{ audit.actor }}</strong>
+                  <span class="text-ink-soft"> {{ audit.action }} </span>
+                  <span class="font-mono text-xs font-bold" [class.text-brand]="!audit.isWarning" [class.text-danger]="audit.isWarning">
                     {{ audit.service }}
                   </span>
                 </div>
-                <span class="text-[10px] text-outline font-mono">{{ audit.timeAgo }}</span>
+                <span class="text-[10px] text-ink-soft font-mono">{{ audit.timeAgo }}</span>
               </div>
-              <div class="flex items-center justify-between mt-1 text-[11px] text-outline">
+              <div class="flex items-center justify-between mt-1 text-[11px] text-ink-soft">
                 <span>{{ audit.catedra }}</span>
                 <span class="font-mono font-medium">IP: {{ audit.ip }}</span>
               </div>

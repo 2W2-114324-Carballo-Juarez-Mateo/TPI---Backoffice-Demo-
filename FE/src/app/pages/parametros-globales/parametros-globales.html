@@ -1,85 +1,85 @@
-<div class="p-8 space-y-8 max-w-7xl mx-auto">
-  <!-- Cabecera -->
+<div class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto">
+  <!-- Cabecera Arcade -->
   <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
     <div>
-      <div class="flex items-center gap-2 mb-1">
-        <span class="text-xs font-mono px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">MOD-06</span>
-        <span class="text-xs text-outline">•</span>
-        <span class="text-xs text-outline font-semibold text-primary">Tema 12 • FRC Core</span>
+      <div class="flex items-center gap-2 mb-1.5">
+        <app-arcade-badge tone="cyan" appearance="solid" size="sm">MOD-06</app-arcade-badge>
+        <span class="text-ink-soft">•</span>
+        <span class="text-xs font-mono font-bold text-ink-soft uppercase tracking-wider">Tema 12 • FRC Core</span>
       </div>
-      <h1 class="text-2xl font-bold text-on-surface tracking-tight">Motor de Parámetros Globales (PAR-01 a PAR-18)</h1>
-      <p class="text-sm text-on-surface-variant mt-0.5">Catálogo único de economía gamificada, límites algorítmicos y políticas de retención institucional.</p>
+      <h1 class="text-2xl sm:text-3xl font-black text-ink tracking-tight">Motor de Parámetros Globales (PAR-01 a PAR-18)</h1>
+      <p class="text-xs sm:text-sm text-ink-soft mt-0.5 font-medium">Catálogo único de economía gamificada, límites algorítmicos y políticas de retención institucional.</p>
     </div>
 
     <div class="flex items-center gap-3">
       <button
         (click)="exportJSON()"
-        class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 transition-colors border border-outline-variant/30"
+        class="btn-arcade-pipos btn-arcade-neutral px-4 py-2 flex items-center gap-2"
       >
         <span class="material-symbols-outlined text-[16px]">data_object</span>
-        <span>Exportar JSON</span>
+        <span class="font-mono text-xs">Exportar JSON</span>
       </button>
     </div>
   </div>
 
   @if (toastMessage()) {
-    <div class="bg-primary-fixed/30 border border-primary/20 text-on-primary-fixed px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 animate-fadeIn">
-      <span class="material-symbols-outlined text-primary text-[18px]">info</span>
+    <div class="arcade-card p-3.5 border-brand/60 bg-brand/10 text-brand rounded-sm flex items-center gap-2.5 text-xs font-bold font-mono animate-fadeIn">
+      <span class="material-symbols-outlined text-brand text-[18px]">info</span>
       <span>{{ toastMessage() }}</span>
     </div>
   }
 
-  <!-- 4 Cards Superiores de Estado -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+  <!-- 4 Cards Superiores de Estado en Bento Grid Arcade -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+    <div class="arcade-card arcade-corners p-5 flex flex-col justify-between">
       <div class="flex items-center justify-between mb-2">
-        <span class="text-xs font-semibold text-outline uppercase tracking-wider">Total Claves PAR</span>
-        <span class="p-2 rounded-xl bg-surface-container-high text-primary material-symbols-outlined text-[20px]">tune</span>
+        <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">Total Claves PAR</span>
+        <span class="w-8 h-8 rounded-sm bg-surface-2 border border-line flex items-center justify-center text-brand material-symbols-outlined text-[18px]">tune</span>
       </div>
-      <div class="text-3xl font-bold text-on-surface font-mono">{{ stats().totalKeys }}</div>
-      <p class="text-[11px] text-emerald-700 font-semibold mt-1">100% Catálogo Registrado</p>
+      <div class="text-2xl sm:text-3xl font-bold text-ink font-retro">{{ stats().totalKeys }}</div>
+      <p class="text-[11px] text-green-400 font-mono font-semibold mt-2">100% Catálogo Registrado</p>
     </div>
 
-    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+    <div class="arcade-card arcade-corners p-5 flex flex-col justify-between">
       <div class="flex items-center justify-between mb-2">
-        <span class="text-xs font-semibold text-outline uppercase tracking-wider">Módulos Conectados</span>
-        <span class="p-2 rounded-xl bg-surface-container-high text-secondary material-symbols-outlined text-[20px]">hub</span>
+        <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">Módulos Conectados</span>
+        <span class="w-8 h-8 rounded-sm bg-surface-2 border border-line flex items-center justify-center text-secondary material-symbols-outlined text-[18px]">hub</span>
       </div>
-      <div class="text-3xl font-bold text-on-surface font-mono">{{ stats().connectedModules }}</div>
-      <p class="text-[11px] text-outline mt-1 font-mono">Temas 01 a 11 + Gateway</p>
+      <div class="text-2xl sm:text-3xl font-bold text-ink font-retro">{{ stats().connectedModules }}</div>
+      <p class="text-[11px] text-ink-soft mt-2 font-mono">Temas 01 a 11 + Gateway</p>
     </div>
 
-    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+    <div class="arcade-card arcade-corners p-5 flex flex-col justify-between">
       <div class="flex items-center justify-between mb-2">
-        <span class="text-xs font-semibold text-outline uppercase tracking-wider">Tasa Sincronización</span>
-        <span class="p-2 rounded-xl bg-surface-container-high text-emerald-600 material-symbols-outlined text-[20px]">sync_saved_locally</span>
+        <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">Tasa Sincronización</span>
+        <span class="w-8 h-8 rounded-sm bg-surface-2 border border-line flex items-center justify-center text-green-400 material-symbols-outlined text-[18px]">sync_saved_locally</span>
       </div>
-      <div class="text-3xl font-bold text-emerald-700 font-mono">{{ stats().syncRate }}</div>
-      <p class="text-[11px] text-outline mt-1">Event Bus Kafka Activo</p>
+      <div class="text-2xl sm:text-3xl font-bold text-green-400 font-retro">{{ stats().syncRate }}</div>
+      <p class="text-[11px] text-ink-soft mt-2 font-mono">Event Bus Kafka Activo</p>
     </div>
 
-    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+    <div class="arcade-card arcade-corners p-5 flex flex-col justify-between">
       <div class="flex items-center justify-between mb-2">
-        <span class="text-xs font-semibold text-outline uppercase tracking-wider">Último Evento Kafka</span>
-        <span class="p-2 rounded-xl bg-surface-container-high text-outline material-symbols-outlined text-[20px]">schedule</span>
+        <span class="text-[9px] font-retro text-ink-soft uppercase tracking-wider">Último Evento Kafka</span>
+        <span class="w-8 h-8 rounded-sm bg-surface-2 border border-line flex items-center justify-center text-ink-soft material-symbols-outlined text-[18px]">schedule</span>
       </div>
-      <div class="text-2xl font-bold text-on-surface font-mono">{{ stats().lastKafkaEvent }}</div>
-      <p class="text-[11px] text-outline mt-1 font-mono">GlobalConfigurationChanged</p>
+      <div class="text-xl sm:text-2xl font-bold text-ink font-mono">{{ stats().lastKafkaEvent }}</div>
+      <p class="text-[10px] text-ink-soft mt-2 font-mono truncate">GlobalConfigChanged</p>
     </div>
   </div>
 
-  <!-- Contenedor Principal: Tabla y Toolbar -->
-  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden">
+  <!-- Contenedor Principal: Tabla y Toolbar Arcade -->
+  <div class="arcade-card arcade-corners p-0 overflow-hidden">
     <!-- Toolbar -->
-    <div class="p-6 border-b border-surface-container-highest flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4">
+    <div class="p-4 sm:p-6 border-b border-line flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4 bg-surface-2/40">
       <div class="relative flex-1 max-w-md">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-soft text-[18px]">search</span>
         <input
           type="text"
           [value]="searchTerm()"
           (input)="onSearch($event)"
-          placeholder="Buscar por código PAR, nombre o módulo consumidor..."
-          class="w-full pl-10 pr-4 py-2 bg-surface-container-high rounded-xl text-xs text-on-surface placeholder:text-outline border-none focus:ring-2 focus:ring-primary"
+          placeholder="Buscar código PAR, nombre o módulo consumidor..."
+          class="w-full pl-10 pr-4 py-2 bg-surface-2 border border-line rounded-sm text-xs font-mono text-ink placeholder:text-ink-soft focus:outline-none focus:border-brand"
         />
       </div>
 
@@ -88,11 +88,13 @@
         @for (cat of ['Todos los Parámetros (18)', 'Economía & Gamificación', 'Evaluación & IA', 'Seguridad & Plataforma']; track cat) {
           <button
             (click)="selectCategory(cat)"
-            [class.bg-primary]="selectedCategory() === cat"
-            [class.text-white]="selectedCategory() === cat"
-            [class.bg-surface-container-high]="selectedCategory() !== cat"
-            [class.text-on-surface-variant]="selectedCategory() !== cat"
-            class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all hover:text-on-surface"
+            [class.btn-arcade-pipos]="selectedCategory() === cat"
+            [class.btn-arcade-cyan]="selectedCategory() === cat"
+            [class.bg-surface-2]="selectedCategory() !== cat"
+            [class.text-ink-soft]="selectedCategory() !== cat"
+            [class.border]="selectedCategory() !== cat"
+            [class.border-line]="selectedCategory() !== cat"
+            class="px-3 py-1.5 rounded-sm text-xs font-mono transition-all hover:text-ink"
           >
             {{ cat }}
           </button>
@@ -102,8 +104,8 @@
 
     <!-- Tabla de Parámetros -->
     <div class="overflow-x-auto">
-      <table class="w-full text-left text-xs">
-        <thead class="bg-surface-container-low text-on-surface-variant font-semibold border-b border-surface-container-highest">
+      <table class="w-full text-left text-xs font-mono">
+        <thead class="bg-surface-2 text-ink-soft font-bold uppercase tracking-wider text-[11px] border-b-2 border-line">
           <tr>
             <th class="py-3.5 px-4">Código PAR</th>
             <th class="py-3.5 px-4">Nombre del Parámetro</th>
@@ -113,42 +115,46 @@
             <th class="py-3.5 px-4 text-right">Acciones</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-surface-container-highest">
+        <tbody class="divide-y divide-line">
           @for (p of filteredParams(); track p.code) {
-            <tr class="hover:bg-surface-container-low transition-colors">
-              <td class="py-3.5 px-4 font-mono font-bold text-primary">{{ p.code }}</td>
+            <tr class="hover:bg-surface-2/60 transition-colors">
+              <td class="py-3.5 px-4 font-retro text-xs text-brand">{{ p.code }}</td>
               <td class="py-3.5 px-4">
-                <div class="font-bold text-on-surface text-xs">{{ p.name }}</div>
-                <div class="text-[10px] text-outline font-medium mt-0.5">{{ p.category }}</div>
+                <div class="font-bold text-ink text-xs font-mono">{{ p.name }}</div>
+                <div class="text-[10px] text-ink-soft font-mono mt-0.5">{{ p.category }}</div>
               </td>
-              <td class="py-3.5 px-4 font-mono font-bold text-on-surface">{{ p.value }}</td>
               <td class="py-3.5 px-4">
-                <span class="text-xs text-on-surface-variant font-medium">{{ p.consumers }}</span>
-              </td>
-              <td class="py-3.5 px-4 text-center">
-                <span
-                  class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold inline-block"
-                  [class.bg-emerald-50]="p.status === 'Vigente'"
-                  [class.text-emerald-700]="p.status === 'Vigente'"
-                  [class.bg-amber-50]="p.status === 'Modificado'"
-                  [class.text-amber-700]="p.status === 'Modificado'"
-                >
-                  {{ p.version }} • {{ p.status }}
+                <span class="bg-surface-2 px-2 py-1 rounded-sm border border-line text-ink font-mono font-bold text-xs inline-block">
+                  {{ p.value }}
                 </span>
               </td>
+              <td class="py-3.5 px-4">
+                <span class="text-xs text-ink-soft font-mono">{{ p.consumers }}</span>
+              </td>
+              <td class="py-3.5 px-4 text-center">
+                <app-arcade-badge
+                  [tone]="p.status === 'Vigente' ? 'green' : 'yellow'"
+                  appearance="outline"
+                  size="sm"
+                >
+                  {{ p.version }} • {{ p.status }}
+                </app-arcade-badge>
+              </td>
               <td class="py-3.5 px-4 text-right">
-                <div class="flex items-center justify-end gap-1.5">
+                <div class="flex items-center justify-end gap-2">
                   <button
                     (click)="openEditModal(p)"
-                    class="px-3 py-1 rounded-lg bg-primary hover:bg-primary-container text-white text-[11px] font-semibold transition-colors"
+                    class="btn-arcade-pipos btn-arcade-cyan px-2.5 py-1 text-[10px] flex items-center gap-1"
                   >
-                    Editar
+                    <span class="material-symbols-outlined text-[13px]">edit</span>
+                    <span>Editar</span>
                   </button>
                   <button
                     (click)="viewHistory(p)"
-                    class="px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-[11px] font-semibold transition-colors"
+                    class="btn-arcade-pipos btn-arcade-neutral px-2.5 py-1 text-[10px] flex items-center gap-1"
                   >
-                    Historial
+                    <span class="material-symbols-outlined text-[13px]">history</span>
+                    <span>Historial</span>
                   </button>
                 </div>
               </td>
@@ -158,17 +164,17 @@
       </table>
     </div>
 
-    <!-- Paginación -->
-    <div class="flex flex-col sm:flex-row justify-between items-center px-6 py-4 border-t border-surface-container-highest gap-4">
-      <span class="text-xs text-on-surface-variant">Mostrando {{ filteredParams().length }} de 24 parámetros operacionales registrados</span>
-      <div class="flex items-center gap-1.5">
-        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium disabled:opacity-50" disabled>
+    <!-- Paginación Arcade -->
+    <div class="flex flex-col sm:flex-row justify-between items-center px-6 py-4 border-t border-line gap-4 bg-surface-2/20">
+      <span class="text-xs font-mono text-ink-soft">Mostrando {{ filteredParams().length }} de 18 parámetros operacionales registrados</span>
+      <div class="flex items-center gap-1.5 font-mono">
+        <button class="px-3 py-1.5 bg-surface-2 hover:bg-surface-2/80 text-ink rounded-sm text-xs border border-line disabled:opacity-40" disabled>
           Anterior
         </button>
-        <button class="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-medium">1</button>
-        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium">2</button>
-        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium">3</button>
-        <button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-xs font-medium">
+        <button class="btn-arcade-pipos btn-arcade-cyan px-3 py-1 text-xs">1</button>
+        <button class="px-3 py-1.5 bg-surface-2 hover:bg-surface-2/80 text-ink rounded-sm text-xs border border-line">2</button>
+        <button class="px-3 py-1.5 bg-surface-2 hover:bg-surface-2/80 text-ink rounded-sm text-xs border border-line">3</button>
+        <button class="px-3 py-1.5 bg-surface-2 hover:bg-surface-2/80 text-ink rounded-sm text-xs border border-line">
           Siguiente
         </button>
       </div>
@@ -176,113 +182,113 @@
   </div>
 
   <!-- Sección Inferior: 3 Cards de Infraestructura y Gobernanza -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm space-y-2">
-      <div class="flex items-center gap-2 text-primary font-bold text-xs">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+    <div class="arcade-card arcade-corners p-5 space-y-2">
+      <div class="flex items-center gap-2 text-brand font-bold text-xs font-mono uppercase tracking-wider">
         <span class="material-symbols-outlined text-[18px]">stream</span>
         <span>Tópicos Kafka Activos</span>
       </div>
-      <p class="text-xs text-on-surface-variant leading-relaxed">
-        Eventos publicados en <code class="font-mono text-[11px] text-primary">administration.events</code> con tasa de 120 msg/min y TTL de caché de 10 minutos.
+      <p class="text-xs text-ink-soft font-mono leading-relaxed">
+        Eventos publicados en <code class="bg-surface-2 px-1 py-0.5 border border-line rounded-xs text-brand">administration.events</code> con tasa de 120 msg/min y TTL de caché de 10 minutos.
       </p>
     </div>
 
-    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm space-y-2">
-      <div class="flex items-center gap-2 text-secondary font-bold text-xs">
+    <div class="arcade-card arcade-corners p-5 space-y-2">
+      <div class="flex items-center gap-2 text-secondary font-bold text-xs font-mono uppercase tracking-wider">
         <span class="material-symbols-outlined text-[18px]">verified</span>
         <span>Validación Criptográfica</span>
       </div>
-      <p class="text-xs text-on-surface-variant leading-relaxed">
-        Firma SHA-256 inmutable de configuración: <code class="font-mono text-[10px] text-outline block truncate">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code>
+      <p class="text-xs text-ink-soft font-mono leading-relaxed">
+        Firma SHA-256 inmutable de configuración: <code class="bg-surface-2 px-1 py-0.5 border border-line rounded-xs text-ink block truncate mt-1">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code>
       </p>
     </div>
 
-    <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/30 shadow-sm space-y-2">
-      <div class="flex items-center gap-2 text-emerald-700 font-bold text-xs">
+    <div class="arcade-card arcade-corners p-5 space-y-2">
+      <div class="flex items-center gap-2 text-green-400 font-bold text-xs font-mono uppercase tracking-wider">
         <span class="material-symbols-outlined text-[18px]">schema</span>
         <span>Schema Registry Avro</span>
       </div>
-      <p class="text-xs text-on-surface-variant leading-relaxed">
-        Compatibilidad <code class="font-mono text-[11px]">FULL_TRANSITIVE</code> bajo Schema Registry ID <span class="font-mono font-semibold text-on-surface">SR-2026.03-v4</span>.
+      <p class="text-xs text-ink-soft font-mono leading-relaxed">
+        Compatibilidad <code class="bg-surface-2 px-1 py-0.5 border border-line rounded-xs text-ink">FULL_TRANSITIVE</code> bajo Schema Registry ID <span class="font-bold text-brand">SR-2026.03-v4</span>.
       </p>
     </div>
   </div>
 
   <!-- Modal Interactivo de Edición Avanzado con Advertencia RF-CFG-06 y Justificación RF-AUD-02 -->
   @if (selectedParamForEdit(); as param) {
-    <div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 animate-fadeIn">
-      <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant max-w-lg w-full p-6 shadow-xl space-y-5">
-        <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest">
+    <div class="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 animate-fadeIn">
+      <div class="arcade-card arcade-corners max-w-lg w-full p-6 space-y-5 bg-surface border-2 border-line shadow-2xl">
+        <div class="flex items-center justify-between pb-3 border-b border-line">
           <div>
             <div class="flex items-center gap-2">
-              <span class="font-mono font-bold text-sm text-primary">{{ param.code }}</span>
-              <span class="text-xs text-outline">•</span>
-              <span class="text-xs text-outline">{{ param.category }}</span>
+              <span class="font-retro text-sm text-brand">{{ param.code }}</span>
+              <span class="text-xs text-ink-soft">•</span>
+              <span class="text-xs text-ink-soft font-mono">{{ param.category }}</span>
             </div>
-            <h3 class="text-base font-bold text-on-surface mt-0.5">{{ param.name }}</h3>
+            <h3 class="text-base font-bold text-ink mt-0.5 font-mono">{{ param.name }}</h3>
           </div>
-          <button (click)="closeEditModal()" class="text-outline hover:text-on-surface p-1 rounded-lg">
+          <button (click)="closeEditModal()" class="text-ink-soft hover:text-ink p-1 rounded-sm">
             <span class="material-symbols-outlined text-[20px]">close</span>
           </button>
         </div>
 
         <!-- Advertencia del Principio RF-CFG-06 -->
-        <div class="p-3.5 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-2.5 text-xs text-amber-900">
-          <span class="material-symbols-outlined text-amber-700 text-[20px] shrink-0 mt-0.5">warning</span>
+        <div class="arcade-card p-3.5 border-gold/60 bg-gold/10 text-gold rounded-sm flex items-start gap-2.5 text-xs font-mono">
+          <span class="material-symbols-outlined text-gold text-[20px] shrink-0 mt-0.5">warning</span>
           <div class="space-y-1">
             <strong class="font-bold">Principio de Inmutabilidad Retroactiva (RF-CFG-06):</strong>
-            <p class="text-[11px] leading-relaxed">
+            <p class="text-[11px] leading-relaxed opacity-90">
               Este cambio rige <strong>hacia adelante</strong>. La plataforma nunca recalculará puntajes, monedas ni niveles históricos ya otorgados a los estudiantes.
             </p>
           </div>
         </div>
 
-        <div class="space-y-4 text-xs">
+        <div class="space-y-4 text-xs font-mono">
           <div>
-            <label class="block font-semibold text-outline uppercase tracking-wider mb-1">Módulos Consumidores Afectados</label>
-            <div class="p-2.5 bg-surface-container-low rounded-xl text-on-surface-variant font-medium border border-outline-variant/20">
+            <label class="block font-bold text-ink-soft uppercase tracking-wider mb-1 text-[10px]">Módulos Consumidores Afectados</label>
+            <div class="p-2.5 bg-surface-2 rounded-sm text-ink border border-line">
               {{ param.consumers }}
             </div>
           </div>
 
           <div>
-            <label class="block font-semibold text-outline uppercase tracking-wider mb-1">Nuevo Valor Configurado</label>
+            <label class="block font-bold text-ink-soft uppercase tracking-wider mb-1 text-[10px]">Nuevo Valor Configurado</label>
             <input
               #valInput
               type="text"
               [value]="param.value"
-              class="w-full bg-surface-container-high rounded-xl px-4 py-2.5 text-xs text-on-surface font-mono font-bold border-none focus:ring-2 focus:ring-primary"
+              class="w-full bg-surface-2 border border-line rounded-sm px-4 py-2.5 text-xs text-ink font-mono font-bold focus:outline-none focus:border-brand"
             />
           </div>
 
           <!-- Textarea obligatorio de justificación RF-AUD-02 -->
           <div>
             <div class="flex justify-between items-center mb-1">
-              <label class="block font-semibold text-rose-600 uppercase tracking-wider">
+              <label class="block font-bold text-danger uppercase tracking-wider text-[10px]">
                 Motivo del Cambio (Obligatorio • RF-AUD-02)
               </label>
-              <span class="text-[10px] text-outline font-mono">Bitácora AdminAuditLog</span>
+              <span class="text-[10px] text-ink-soft font-mono">Bitácora AdminAuditLog</span>
             </div>
             <textarea
               [value]="auditReason()"
               (input)="onReasonInput($event)"
               placeholder="Describa la justificación académica u operativa del cambio para la auditoría institucional..."
               rows="3"
-              class="w-full bg-surface-container-high rounded-xl p-3 text-xs text-on-surface border-none focus:ring-2 focus:ring-primary placeholder:text-outline"
+              class="w-full bg-surface-2 border border-line rounded-sm p-3 text-xs text-ink font-mono focus:outline-none focus:border-brand placeholder:text-ink-soft"
             ></textarea>
           </div>
         </div>
 
-        <div class="flex items-center justify-end gap-3 pt-3 border-t border-surface-container-highest">
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-line">
           <button
             (click)="closeEditModal()"
-            class="px-4 py-2 rounded-xl text-xs font-semibold text-on-surface-variant hover:bg-surface-container transition-colors"
+            class="btn-arcade-pipos btn-arcade-neutral px-4 py-2 text-xs font-mono"
           >
             Cancelar
           </button>
           <button
             (click)="saveParam(valInput.value)"
-            class="bg-primary hover:bg-primary-container text-white text-xs font-semibold px-5 py-2 rounded-xl flex items-center gap-2 transition-all shadow-sm"
+            class="btn-arcade-pipos btn-arcade-cyan px-4 py-2 text-xs font-mono flex items-center gap-2"
           >
             <span class="material-symbols-outlined text-[16px]">send</span>
             <span>Guardar y Publicar en Kafka</span>

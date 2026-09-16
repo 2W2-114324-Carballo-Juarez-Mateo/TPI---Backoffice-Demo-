@@ -8,45 +8,52 @@
   <link rel="icon" type="image/svg+xml" href="logo-utn-frc.svg">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   
-  <!-- Fonts: Inter & JetBrains Mono + Material Symbols Outlined -->
+  <!-- Fonts: Press Start 2P, VT323, Barlow, Inter, JetBrains Mono & Material Symbols -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS CDN with Material 3 Theme Tokens from DESIGN.md -->
+  <!-- nes.css retro arcade framework -->
+  <link rel="stylesheet" href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css">
+
+  <!-- Tailwind CSS CDN with tup-arcade-ui (PiposLibrary) Theme Tokens -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script id="tailwind-config">
     tailwind.config = {
-      darkMode: "class",
+      darkMode: ["selector", '[data-theme="dark"]'],
       theme: {
         extend: {
           colors: {
-            "surface": "#f7f9ff",
-            "surface-dim": "#d7dae0",
-            "surface-bright": "#f7f9ff",
-            "surface-container-lowest": "#ffffff",
-            "surface-container-low": "#f1f4fa",
-            "surface-container": "#ebeef4",
-            "surface-container-high": "#e5e8ee",
-            "surface-container-highest": "#dfe3e8",
-            "on-surface": "#181c20",
-            "on-surface-variant": "#3f4850",
-            "outline": "#707881",
-            "outline-variant": "#bfc7d2",
-            "primary": "#006194",
-            "primary-container": "#007bb9",
-            "on-primary": "#ffffff",
-            "secondary": "#4059aa",
-            "secondary-container": "#8fa7fe",
-            "tertiary": "#006195",
-            "error": "#ba1a1a",
-            "primary-fixed": "#cce5ff",
-            "on-primary-fixed": "#001d31",
-            "primary-fixed-dim": "#93ccff"
+            canvas: "var(--bg-app)",
+            surface: "var(--bg-surface)",
+            "surface-2": "var(--bg-surface-alt)",
+            line: "var(--border-subtle)",
+            "line-highlight": "var(--border-highlight)",
+            ink: "var(--text-primary)",
+            "ink-soft": "var(--text-muted)",
+            brand: "var(--accent-primary)",
+            "brand-2": "var(--accent-secondary)",
+            gold: "var(--accent-gold)",
+            danger: "var(--accent-danger)",
+            success: "var(--accent-success)",
+            /* Backward-compatible aliases for existing templates */
+            primary: "var(--accent-primary)",
+            "primary-container": "var(--accent-primary)",
+            "on-surface": "var(--text-primary)",
+            "on-surface-variant": "var(--text-muted)",
+            outline: "var(--border-subtle)",
+            "outline-variant": "var(--border-highlight)",
+            "surface-container-lowest": "var(--bg-surface)",
+            "surface-container-low": "var(--bg-surface-alt)",
+            "surface-container": "var(--bg-surface)",
+            "surface-container-high": "var(--bg-surface-alt)",
+            "surface-container-highest": "var(--border-subtle)"
           },
           fontFamily: {
-            sans: ["Inter", "sans-serif"],
+            retro: ['"Press Start 2P"', "monospace"],
+            arcade: ["VT323", "monospace"],
+            sans: ["Barlow", "Inter", "sans-serif"],
             mono: ["JetBrains Mono", "monospace"]
           }
         }
@@ -54,7 +61,7 @@
     };
   </script>
 </head>
-<body class="bg-surface font-sans text-on-surface h-full m-0 p-0 overflow-hidden antialiased">
+<body class="bg-canvas font-sans text-ink h-full m-0 p-0 overflow-hidden antialiased selection:bg-brand selection:text-white transition-colors duration-200">
   <app-root class="h-full flex flex-col"></app-root>
 </body>
 </html>
