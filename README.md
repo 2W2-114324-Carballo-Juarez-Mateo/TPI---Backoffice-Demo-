@@ -22,19 +22,20 @@ config/                           # Configuración del Config Server (perfiles)
 ```
 
 ## Tecnologías
-Java 21 · Spring Boot 3 · Maven (multi-módulo) · PostgreSQL (una base por servicio) · Kafka · Eureka · Config Server · Spring Cloud Gateway (local) · Flyway · Testcontainers · GitHub Actions · Checkstyle/PMD.
+Java 21 · Spring Boot 4 · Maven (mono-módulo) · PostgreSQL (1 datasource, 2 esquemas: `administration`/`reporting`) · Kafka · Eureka (Discovery) · Flyway · Testcontainers · GitHub Actions · Checkstyle/PMD.
+> Este repo (Demo) conserva la estructura multi-módulo anterior; la **entrega** es mono-módulo en el repo oficial (espejo `tpi-backoffice-espejo/`).
 
 ## Estado del scaffold (para arrancar el Sprint 1)
 
-> Las tareas del Sprint 1 **completan/implementan** sobre este esqueleto (no "crean de cero"). Ya existe:
+> **Arquitectura acordada:** mono-módulo con **1 datasource + 2 esquemas** (`administration` y `reporting`), alineado al repo oficial `2026-P4-BE/tpi-backoffice` (espejo en `Repositorio DEMO/tpi-backoffice-espejo/`, `mvn verify` verde). **Frontend canónico:** la carpeta `FE/` de este repo. Las tareas del Sprint 1 **completan/implementan** sobre este esqueleto (no "crean de cero"). Ya existe:
 
 | Ya en el scaffold | Dónde |
 |---|---|
-| Entidades `GlobalParameter`, `OutboxMessage`, `ProcessedEvent`, `CohortMetricsSnapshot` | `BE/*/domain/model/` |
-| Envelope y evento `EventEnvelope`, `GlobalConfigurationChanged` | `BE/contracts/` |
-| Migraciones `V1__init.sql` (tablas `global_parameter`, `outbox_message`, `processed_event`, `cohort_metrics_snapshot`) | `BE/*/resources/db/migration/` |
-| Infra (Eureka/Config/Gateway) + `docker-compose` | `BE/infrastructure/` · `.compose/` |
-| Health endpoints por servicio | `BE/*/api/HealthController.java` |
+| Mono-módulo Boot 4 (1 datasource + 2 esquemas: `administration`/`reporting`) | `tpi-backoffice-espejo/` (espejo del repo oficial) |
+| Migración `V1__init.sql` (`global_parameter`, `outbox_message` en `administration`; `processed_event`, `cohort_metrics_snapshot`, `report_template` en `reporting`) | `src/main/resources/db/migration/` |
+| Envelope y evento `EventEnvelope`, `GlobalConfigurationChanged` (a alinear con el DTO oficial de cátedra, pendiente) | `BE/contracts/` |
+| Flyway único + DataSource único + Kafka (KRaft) | `.compose/` (1 PG + Kafka) |
+| Health endpoint | `BE/api/HealthController.java` |
 
 **Naming de tabla Outbox:** usar **`outbox_message`** (como el scaffold), no `outbox_events`. Las tareas referencian `outbox_events` en algunos docs → se está alineando a `outbox_message`.
 
